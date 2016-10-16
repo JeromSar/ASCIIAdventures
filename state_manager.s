@@ -23,6 +23,8 @@ print_state:
 	movq	%rsp, %rbp
 	pushq	%r12
 	pushq	%r13
+	pushq	%r14
+	pushq	%r15
 
 	movq	current_state, %r13
 
@@ -33,7 +35,8 @@ print_state:
 	je	game_print
 
 print_state_ret:
-
+	popq	%r15
+	popq	%r14
 	popq	%r13
 	popq	%r12
 	movq	%rbp, %rsp
@@ -51,6 +54,11 @@ control_state:
 	pushq	%r13
 	pushq	%r14
 	pushq	%r15
+
+	# Resize the terminal
+	#movq	HEIGHT, %rdi
+	#movq	WIDTH, %rsi
+	#call	resizeterm
 
 	call	getch					# Read a character
 	movq	%rax, %r12				# Store it in r12

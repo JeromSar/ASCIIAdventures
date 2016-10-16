@@ -9,10 +9,10 @@ color_magenta:		.quad	5
 color_cyan:		.quad	6
 color_white:		.quad	7
 
-.global init_curses
-.global deinit_curses
+.global curses_init
+.global curses_deinit
 
-init_curses:
+curses_init:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
@@ -38,7 +38,8 @@ init_curses:
 	# Check that colors are supported
 	call	has_colors
 	cmpq	$0, %rax
-	jne	init_curses_color
+	jne	curses_init_color
+
 
 	call	endwin
 	movq	$no_color_err, %rdi
@@ -48,7 +49,7 @@ init_curses:
 	call	exit
 
 
-init_curses_color:
+curses_init_color:
 
 	# Initialise some colors
 	call	start_color
@@ -64,7 +65,7 @@ init_curses_color:
 	popq	%rbp
 	ret
 
-deinit_curses:
+curses_deinit:
 	pushq	%rbp
 	movq	%rsp, %rbp
 

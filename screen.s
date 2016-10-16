@@ -1,9 +1,38 @@
 
-.global screen_game
+.global screen_game_1
+.global screen_game_2
+.global screen_game_3
 .global screen_main_menu
 
 .text
-screen_game:
+screen_game_1:
+	.ascii "[]====================================  ======================================[]"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                               THERE IS GAME                                  "
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "[]============================================================================[]"
+	.asciz ""
+
+screen_game_2:
 	.ascii "[]============================================================================[]"
 	.ascii "||                                                                            ||"
 	.ascii "||                                                                            ||"
@@ -15,7 +44,35 @@ screen_game:
 	.ascii "||                                                                            ||"
 	.ascii "||                                                                            ||"
 	.ascii "||                                                                            ||"
-	.ascii "||                               THERE IS GAME                                ||"
+	.ascii "||                               HOORAY FOR GAME                              ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "[]====================================  ======================================[]"
+	.asciz ""
+
+
+screen_game_3:
+	.ascii "[]============================================================================[]"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "||                                                                            ||"
+	.ascii "                               HOW RIGHT YOU ARE                              ||"
 	.ascii "||                                                                            ||"
 	.ascii "||                                                                            ||"
 	.ascii "||                                                                            ||"

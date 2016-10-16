@@ -1,28 +1,32 @@
 
 .text
-test:		.asciz	"Hello world!!!"
-WIDTH:		.quad	80
-HALF_WIDTH:	.quad	40
-HEIGHT:		.quad	24
-HALF_HEIGHT:	.quad	12
-char_w:		.quad	'w'
-char_s:		.quad	's'
+test:			.asciz	"Hello world!!!"
+WIDTH:			.quad	80
+WIDTH_MINUS_ONE:	.quad	79
+HALF_WIDTH:		.quad	40
+HEIGHT:			.quad	24
+HEIGHT_MINUS_ONE:	.quad	23
+HALF_HEIGHT:		.quad	12
+char_w:			.quad	'w'
+char_s:			.quad	's'
 
 
 .global WIDTH
+.global WIDTH_MINUS_ONE
 .global HALF_WIDTH
 .global HEIGHT
+.global HEIGHT_MINUS_ONE
 .global HALF_HEIGHT
 
-
 .global main
-.global end
+.global main_end
 
 main:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
-	call	init_curses
+	call	curses_init
+	call	mobs_init
 
 main_loop:
 	call	print_state				# Print the current screen to the buffer
@@ -35,7 +39,7 @@ main_loop:
 	jne	main_loop				# Don't continue the main_loop
 
 main_end:
-	call	deinit_curses
+	call	curses_deinit
 
 	movq	$0, %rdi
 	call	exit
