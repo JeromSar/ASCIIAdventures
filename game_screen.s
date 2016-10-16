@@ -1,7 +1,7 @@
 
 .data
-screen_x:		.quad	3
-screen_y:		.quad	3
+screen_x:		.quad	1
+screen_y:		.quad	2
 
 .global screen_x
 .global screen_y

@@ -1,15 +1,19 @@
 
 .text
 test:			.asciz	"Hello world!!!"
-WIDTH:			.quad	80
-WIDTH_MINUS_ONE:	.quad	79
-HALF_WIDTH:		.quad	40
-HEIGHT:			.quad	24
-HEIGHT_MINUS_ONE:	.quad	23
-HALF_HEIGHT:		.quad	12
 char_w:			.quad	'w'
 char_s:			.quad	's'
 
+WIDTH:			.quad	80
+WIDTH_MINUS_ONE:	.quad	79
+HALF_WIDTH:		.quad	40
+
+HEIGHT:			.quad	24
+HEIGHT_MINUS_ONE:	.quad	23
+HALF_HEIGHT:		.quad	12
+
+GAME_HEIGHT:		.quad	18
+GAME_HEIGHT_MINUS_ONE:	.quad	17
 
 .global WIDTH
 .global WIDTH_MINUS_ONE
@@ -17,6 +21,8 @@ char_s:			.quad	's'
 .global HEIGHT
 .global HEIGHT_MINUS_ONE
 .global HALF_HEIGHT
+.global GAME_HEIGHT
+.global GAME_HEIGHT_MINUS_ONE
 
 .global main
 .global main_end

@@ -1,5 +1,7 @@
 .global game_print
 .global game_control
+.global screen_x
+.global screen_y
 
 game_print:
 

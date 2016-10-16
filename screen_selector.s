@@ -1,8 +1,22 @@
 .text
 no_screen_err:	.asciz	"No such screen: (x=%u, y=%u)\n"
-
-.data
-
+screentable:
+	.quad	lvl_1_00
+	.quad	lvl_1_10
+	.quad	lvl_1_20
+	.quad	lvl_1_30
+	.quad	lvl_1_01
+	.quad	lvl_1_11
+	.quad	lvl_1_21
+	.quad	lvl_1_31
+	.quad	lvl_1_02
+	.quad	lvl_1_12
+	.quad	lvl_1_22
+	.quad	lvl_1_32
+	.quad	lvl_1_03
+	.quad	lvl_1_13
+	.quad	lvl_1_23
+	.quad	lvl_1_33
 
 .global select_screen
 
@@ -10,52 +24,21 @@ select_screen:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
-	# x = 3
-	cmpq	$3, %rdi
-	je	x_3
+	# Calculate scr id, store in r14
+	movq	screen_y, %rdx
+	movq	$4, %rax
+	mulq	%rdx
+	addq	screen_x, %rax
 
-	cmpq	$4, %rdi
-	je	x_4
+	#cmpq	$15, %rax
+	#jg	screen_not_found
 
-	call	screen_not_found
-
-	#
-	# X = 3
-	#
-x_3:
-	# y = 3
-	cmpq	$3, %rsi
-	je	x_3_y_3
-
-	# y = 2
-	cmpq	$2, %rsi
-	je	x_3_y_2
-
-	call	screen_not_found
+	shl	$3, %rax
+	movq	screentable(%rax), %rax
 
 
-x_3_y_3:
-	movq	$screen_game_1, %rax
-	jmp	screen_select_end
+	#movq	$lvl_1_12, %rax
 
-x_3_y_2:
-	movq	$screen_game_2, %rax
-	jmp	screen_select_end
-
-	#
-	# X = 4
-	#
-x_4:
-	cmpq	$3, %rsi
-	je	x_4_y_3
-
-	call	screen_not_found
-
-x_4_y_3:
-	movq	$screen_game_3, %rax
-	jmp	screen_select_end
-
-screen_select_end:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret

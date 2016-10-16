@@ -4,7 +4,7 @@ format_char:		.asciz	"%c"
 
 .data
 player_x:		.quad	39
-player_y:		.quad	4
+player_y:		.quad	8
 
 .global player_x
 .global player_y
@@ -57,7 +57,7 @@ control_w:
 
 	# We have y=0, go to the above screen
 	decq	screen_y
-	movq	HEIGHT, %r14
+	movq	GAME_HEIGHT, %r14
 	decq	%r14
 	jmp	update_player_pos
 control_w_done:
@@ -65,7 +65,7 @@ control_w_done:
 	jmp	control_post
 
 control_s:
-	cmpq	HEIGHT_MINUS_ONE, %r14
+	cmpq	GAME_HEIGHT_MINUS_ONE, %r14
 	jne	control_s_done
 
 	# we have y=HEIGHT-1, go to the below screen
