@@ -31,6 +31,10 @@ curses_init:
 	movq	$1, %rsi
 	#call	keypad				# Or not
 
+	# Enable special character
+	movq	$178, %rdi
+	call	addch
+
 	# Hide the cursor
 	movq	$0, %rdi
 	call	curs_set

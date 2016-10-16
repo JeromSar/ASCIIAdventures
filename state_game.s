@@ -8,11 +8,13 @@ debug2:			.asciz	"There are %lu mobs."
 .data
 player_x:		.quad	39
 player_y:		.quad	4
-screen_x:		.quad	3
-screen_y:		.quad	3
+screen_x:		.quad	1
+screen_y:		.quad	2
 
 .global game_print
 .global game_control
+.global screen_x
+.global screen_y
 
 game_print:
 
@@ -122,7 +124,8 @@ control_w:
 
 	# We have y=0, go to the above screen
 	decq	screen_y
-	movq	HEIGHT, %r14
+	movq	$18, %r14
+	#movq	HEIGHT, %r14
 	decq	%r14
 	jmp	update_player_pos
 control_w_done:
@@ -130,7 +133,8 @@ control_w_done:
 	jmp	control_post
 
 control_s:
-	cmpq	HEIGHT_MINUS_ONE, %r14
+	cmpq	$17, %r14
+	#cmpq	HEIGHT_MINUS_ONE, %r14
 	jne	control_s_done
 
 	# we have y=HEIGHT-1, go to the below screen
