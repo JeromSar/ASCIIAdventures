@@ -11,6 +11,8 @@ color_white:		.quad	7
 
 .global curses_init
 .global curses_deinit
+.global	color_start_red
+.global	color_stop_red
 
 curses_init:
 	pushq	%rbp
@@ -48,7 +50,6 @@ curses_init:
 	movq	$1, %rdi
 	call	exit
 
-
 curses_init_color:
 
 	# Initialise some colors
@@ -71,6 +72,34 @@ curses_deinit:
 
 	# Deinit curses
 	call	endwin
+
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
+color_start_red:
+	pushq	%rbp
+	movq	%rsp, %rbp
+
+	# Enable color 1
+	movq	$1, %rdi
+	call	COLOR_PAIR
+	movq	%rax, %rdi
+	call	attron
+
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
+color_stop_red:
+	pushq	%rbp
+	movq	%rsp, %rbp
+
+	# Disable color 1
+	movq	$1, %rdi
+	call	COLOR_PAIR
+	movq	%rax, %rdi
+	call	attroff
 
 	movq	%rbp, %rsp
 	popq	%rbp
