@@ -44,8 +44,9 @@ mobs_print_loop:
 	cmpq	%r14, 16(%rax)
 	jne	mobs_print_continue
 
-	movq	cp_blue, %rdi
-	#call	color_start
+	pushq	%rax
+	call	color_start_blue
+	popq	%rax
 
 	# Get the x y and print
 	movq	24(%rax), %rdi
@@ -53,8 +54,7 @@ mobs_print_loop:
 	movq	$mob_char, %rdx
 	call	mvprintw
 
-	movq	cp_blue, %rdi
-	#call	color_stop
+	call	color_stop_blue
 
 mobs_print_continue:
 	decq	%r15

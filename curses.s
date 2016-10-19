@@ -8,9 +8,6 @@ color_blue:		.quad	4
 color_magenta:		.quad	5
 color_cyan:		.quad	6
 color_white:		.quad	7
-cp_blue:		.quad	3
-
-.global cp_blue
 
 .global curses_init
 .global curses_deinit
@@ -113,7 +110,6 @@ color_start:
 	popq	%rbp
 	ret
 
-
 color_stop:
 	pushq	%rbp
 	movq	%rsp, %rbp
@@ -127,85 +123,31 @@ color_stop:
 	ret
 
 color_start_red:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Enable color 1
 	movq	$1, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attron
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_start
 	ret
 
 color_stop_red:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Disable color 1
 	movq	$1, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attroff
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_stop
 	ret
 
 color_start_yellow:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Enable color 2
 	movq	$2, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attron
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_start
 	ret
 
 color_stop_yellow:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Disable color 2
 	movq	$2, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attroff
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_stop
 	ret
 
 color_start_blue:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Enable color 3
 	movq	$3, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attron
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_start
 	ret
 
 color_stop_blue:
-	pushq	%rbp
-	movq	%rsp, %rbp
-
-	# Disable color 3
 	movq	$3, %rdi
-	call	COLOR_PAIR
-	movq	%rax, %rdi
-	call	attroff
-
-	movq	%rbp, %rsp
-	popq	%rbp
+	call	color_stop
 	ret
