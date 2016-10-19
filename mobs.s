@@ -28,11 +28,10 @@ mobs_init:
 	movq	%rsp, %rbp
 
 	# Make a wolf at (15, 10, 10)
-	movq	$15, %rdi
+	movq	$9, %rdi
 	movq	$10, %rsi
 	movq	$10, %rdx
 	call	make_wolf
-
 
 	# Make a wolf at (15, 10, 10)
 	movq	$15, %rdi

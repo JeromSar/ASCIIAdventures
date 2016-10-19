@@ -1,17 +1,39 @@
-objects = build/game.o build/screen_lvl_1.o build/keys.o build/game_screen.o build/game_player.o build/game_mobs.o build/screen_old.o build/screen_selector.o build/curses.o build/state_manager.o build/mobs.o build/state_main_menu.o build/state_game.o
-.PHONY: clean debug
+objects =\
+	build/game.o \
+	build/curses.o \
+	build/mobs.o \
+	build/keys.o \
+	build/state_manager.o \
+	build/state_main_menu.o \
+	build/state_game.o \
+	build/game_screen.o \
+	build/game_gui.o \
+	build/game_player.o \
+	build/game_mobs.o \
+	build/screen_selector.o \
+	build/screen_main_menu.o \
+	build/screen_gui.o \
+	build/screen_lvl_1.o \
+
+.PHONY: all run game clean debug
+
+all: clean game
+
+run: clean game
+	./game
 
 game: $(objects)
-	$(CC) -g -o "$@" $^ -lncurses
+	$(CC) -ggdb -o "$@" $^ -lncurses
 
 build:
 	mkdir build
 
 build/%.o: %.s | build
-	$(CC) -g -c -o "$@" "$<"
+	$(CC) -ggdb -c -o "$@" "$<"
 
 clean:
 	rm -rf game build
 
-debug:	clean game
-	./game
+debug: clean game
+	gdb -ex run ./game
+	

@@ -1,13 +1,20 @@
 .text
 player_char:		.asciz	"@"
 format_char:		.asciz	"%c"
+went_up:		.asciz	"You went to the above screen."
+went_down:		.asciz	"You went to the below screen."
 
 .data
 player_x:		.quad	39
 player_y:		.quad	8
+player_health:		.quad	10			# Max health
+player_money:		.quad	0
 
 .global player_x
 .global player_y
+.global player_health
+.global player_money
+
 .global player_print
 .global player_control
 
@@ -49,11 +56,14 @@ player_control:
 	cmpq	%r12, key_d
 	je	control_d
 
-	ret		# Unknown key
+	jmp	player_control_done			# Unknown key
 
 control_w:
 	cmpq	$0, %r14
 	jne	control_w_done
+
+	movq	$went_up, %rdi
+	call	log_push
 
 	# We have y=0, go to the above screen
 	decq	screen_y
@@ -67,6 +77,10 @@ control_w_done:
 control_s:
 	cmpq	GAME_HEIGHT_MINUS_ONE, %r14
 	jne	control_s_done
+
+
+	movq	$went_down, %rdi
+	call	log_push
 
 	# we have y=HEIGHT-1, go to the below screen
 	incq	screen_y
@@ -119,6 +133,7 @@ update_player_pos:
 	movq	%r13, player_x
 	movq	%r14, player_y
 
+player_control_done:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret

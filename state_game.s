@@ -14,6 +14,9 @@ game_print:
 	# Print the mobs
 	call	mobs_print
 
+	# Print the gui
+	call	gui_print
+
 	jmp	print_state_ret
 
 game_control:

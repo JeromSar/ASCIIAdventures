@@ -44,11 +44,17 @@ mobs_print_loop:
 	cmpq	%r14, 16(%rax)
 	jne	mobs_print_continue
 
+	movq	cp_blue, %rdi
+	#call	color_start
+
 	# Get the x y and print
 	movq	24(%rax), %rdi
 	movq	32(%rax), %rsi
 	movq	$mob_char, %rdx
 	call	mvprintw
+
+	movq	cp_blue, %rdi
+	#call	color_stop
 
 mobs_print_continue:
 	decq	%r15
