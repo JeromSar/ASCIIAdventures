@@ -8,10 +8,7 @@ mobs_print:
 	movq	%rsp, %rbp
 
 	# Calculate scr id, store in r14
-	movq	screen_y, %rdx
-	movq	$4, %rax
-	mulq	%rdx
-	addq	screen_x, %rax
+	call	screen_get_id
 	movq	%rax, %r14
 
 	# Print mobs
@@ -45,24 +42,22 @@ mobs_print_loop:
 	jne	mobs_print_continue
 
 	pushq	%rax
-	call	color_start_blue
+	call	color_start_cyan
 	popq	%rax
 
 	# Get the x y and print
-	movq	24(%rax), %rdi
-	movq	32(%rax), %rsi
+	movq	32(%rax), %rdi
+	movq	24(%rax), %rsi
 	movq	$mob_char, %rdx
 	call	mvprintw
 
-	call	color_stop_blue
+	call	color_stop_cyan
 
 mobs_print_continue:
 	decq	%r15
 	jmp	mobs_print_loop
 
 mobs_print_done:
-	jmp	print_state_ret
-
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret

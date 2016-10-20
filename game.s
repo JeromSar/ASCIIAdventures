@@ -33,6 +33,7 @@ main:
 
 	call	curses_init
 	call	mobs_init
+	call	levers_init
 
 main_loop:
 	call	print_state				# Print the current screen to the buffer

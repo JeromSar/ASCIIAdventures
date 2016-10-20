@@ -19,6 +19,7 @@ mobs_count:		.quad	1
 
 
 .global mobs_count
+
 .global mobs
 .global mobs_init
 .global mobs_id_to_addr
@@ -27,29 +28,17 @@ mobs_init:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
-	# Make a wolf at (15, 10, 10)
+	# Make a wolf at (9, 10, 10)
 	movq	$9, %rdi
 	movq	$10, %rsi
 	movq	$10, %rdx
 	call	make_wolf
 
-	# Make a wolf at (15, 10, 10)
-	movq	$15, %rdi
-	movq	$20, %rsi
-	movq	$20, %rdx
+	# Make a wolf at (9, 30, 10)
+	movq	$9, %rdi
+	movq	$55, %rsi
+	movq	$5, %rdx
 	call	make_wolf
-
-	# Make a wolf at (10, 5, 6)
-	movq	$10, %rdi
-	movq	$5, %rsi
-	movq	$6, %rdx
-	#call	make_wolf
-
-	# Make a wolf at (4, 5, 6)
-	movq	$4, %rdi
-	movq	$6, %rsi
-	movq	$3, %rdx
-	#call	make_wolf
 
 	movq	%rbp, %rsp
 	popq	%rbp

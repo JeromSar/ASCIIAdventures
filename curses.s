@@ -11,14 +11,18 @@ color_white:		.quad	7
 
 .global curses_init
 .global curses_deinit
+.global color_start
+.global color_stop
 .global	color_start_red
 .global	color_stop_red
 .global color_start_yellow
 .global color_stop_yellow
 .global color_start_blue
 .global color_stop_blue
-.global color_start
-.global color_stop
+.global color_start_cyan
+.global color_stop_cyan
+.global color_start_green
+.global color_stop_green
 
 curses_init:
 	pushq	%rbp
@@ -79,6 +83,18 @@ curses_init_color:
 	# 3 - blue on black
 	movq	$3, %rdi
 	movq	color_blue, %rsi
+	movq	color_black, %rdx
+	call	init_pair
+
+	# 4 - cyan on black
+	movq	$4, %rdi
+	movq	color_cyan, %rsi
+	movq	color_black, %rdx
+	call	init_pair
+
+	# 5 - cyan on black
+	movq	$5, %rdi
+	movq	color_green, %rsi
 	movq	color_black, %rdx
 	call	init_pair
 
@@ -149,5 +165,25 @@ color_start_blue:
 
 color_stop_blue:
 	movq	$3, %rdi
+	call	color_stop
+	ret
+
+color_start_cyan:
+	movq	$4, %rdi
+	call	color_start
+	ret
+
+color_stop_cyan:
+	movq	$4, %rdi
+	call	color_stop
+	ret
+
+color_start_green:
+	movq	$5, %rdi
+	call	color_start
+	ret
+
+color_stop_green:
+	movq	$5, %rdi
 	call	color_stop
 	ret

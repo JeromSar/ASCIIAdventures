@@ -1,4 +1,3 @@
-
 .data
 screen_x:		.quad	1
 screen_y:		.quad	2
@@ -6,6 +5,7 @@ screen_y:		.quad	2
 .global screen_x
 .global screen_y
 .global screen_print
+.global screen_get_id
 
 screen_print:
 	push	%rbp
@@ -21,6 +21,19 @@ screen_print:
 	movq	$0, %rsi
 	movq	%rax, %rdx
 	call	mvprintw
+
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
+screen_get_id:
+	push	%rbp
+	movq	%rsp, %rbp
+
+	movq	screen_y, %rdx
+	movq	$4, %rax
+	mulq	%rdx
+	addq	screen_x, %rax
 
 	movq	%rbp, %rsp
 	popq	%rbp

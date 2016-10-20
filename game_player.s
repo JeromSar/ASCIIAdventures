@@ -78,7 +78,6 @@ control_s:
 	cmpq	GAME_HEIGHT_MINUS_ONE, %r14
 	jne	control_s_done
 
-
 	movq	$went_down, %rdi
 	call	log_push
 
@@ -126,7 +125,7 @@ control_post:
 	call	mvinch
 
 	cmpq	%rax, key_space
-	jne	control_state_ret
+	jne	player_control_done
 
 update_player_pos:
 	# Update the player position
