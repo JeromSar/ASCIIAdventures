@@ -1,30 +1,45 @@
 objects =\
-	build/game.o \
-	build/curses.o \
-	build/keyboard.o \
-	build/state_manager.o \
-	build/state_main_menu.o \
-	build/state_game.o \
-	build/data_player.o \
-	build/data_mobs.o \
-	build/data_levers.o \
-	build/data_menu.o \
-	build/data_actionlog.o \
-	build/render_game_screen.o \
-	build/render_game_screen_selector.o \
-	build/render_game_gui.o \
-	build/render_game_player.o \
-	build/render_game_mobs.o \
-	build/render_game_levers.o \
-	build/render_mainmenu_screen.o \
-	build/control_action.o \
-	build/control_player.o \
-	build/control_mainmenu.o \
-	build/screen_mainmenu.o \
-	build/screen_gui.o \
-	build/screen_lvl_1.o \
+	$(BUILD_DIR)/game.o \
+	$(BUILD_DIR)/curses.o \
+	$(BUILD_DIR)/keyboard.o \
+	$(BUILD_DIR)/state/state_manager.o \
+	$(BUILD_DIR)/state/state_mainmenu.o \
+	$(BUILD_DIR)/state/state_game.o \
+	$(BUILD_DIR)/data/data_player.o \
+	$(BUILD_DIR)/data/data_mobs.o \
+	$(BUILD_DIR)/data/data_levers.o \
+	$(BUILD_DIR)/data/data_menu.o \
+	$(BUILD_DIR)/data/data_actionlog.o \
+	$(BUILD_DIR)/render/render_game_screen.o \
+	$(BUILD_DIR)/render/render_game_screen_selector.o \
+	$(BUILD_DIR)/render/render_game_gui.o \
+	$(BUILD_DIR)/render/render_game_player.o \
+	$(BUILD_DIR)/render/render_game_mobs.o \
+	$(BUILD_DIR)/render/render_game_levers.o \
+	$(BUILD_DIR)/render/render_mainmenu_screen.o \
+	$(BUILD_DIR)/control/control_action.o \
+	$(BUILD_DIR)/control/control_player.o \
+	$(BUILD_DIR)/control/control_mainmenu.o \
+	$(BUILD_DIR)/screen/screen_mainmenu.o \
+	$(BUILD_DIR)/screen/screen_gui.o \
+	$(BUILD_DIR)/screen/screen_lvl_1.o \
+
+SRC_DIR = src
+BUILD_DIR = build
 
 .PHONY: all run game clean debug
+
+define cc-command
+$(CC) -gstabs -c -o "$@" "$<"
+endef
+
+vpath %.s $(SRC_DIR)
+vpath %.s $(SRC_DIR)/control
+vpath %.s $(SRC_DIR)/data
+vpath %.s $(SRC_DIR)/render
+vpath %.s $(SRC_DIR)/screen
+vpath %.s $(SRC_DIR)/state
+
 
 all: clean game
 
@@ -35,10 +50,15 @@ game: $(objects)
 	$(CC) -gstabs -o "$@" $^ -lncurses
 
 build:
-	mkdir build
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)/control
+	mkdir -p $(BUILD_DIR)/data
+	mkdir -p $(BUILD_DIR)/render
+	mkdir -p $(BUILD_DIR)/screen
+	mkdir -p $(BUILD_DIR)/state
 
-build/%.o: %.s | build
-	$(CC) -gstabs -c -o "$@" "$<"
+$(BUILD_DIR)/%.o: %.s | build
+	$(cc-command)
 
 clean:
 	rm -rf game build
