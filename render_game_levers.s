@@ -4,24 +4,24 @@ door_char:		.asciz	"D"
 debug:			.asciz	"There is a lever at (%ul, %ul, %ul)"
 debug2:			.asciz	"Now printing..."
 
-.global levers_print
+.global render_game_levers
 
-levers_print:
+render_game_levers:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
-	call	levers_print_lever
+	call	levers_render_lever
 
-	call	levers_print_door
+	call	levers_render_door
 
 	movq	%rbp, %rsp
 	popq	%rbp
 
 
 
-# Subroutine - levers_print_door
+# Subroutine - levers_render_door
 # Prints all the door-objects in the current screen
-levers_print_door:
+levers_render_door:
 	pushq	%rbp
 	movq	%rsp, %rbp
 	pushq	%r14
@@ -41,9 +41,9 @@ levers_print_door:
 	# DEBUG
 	#movq	$1, %r14
 
-door_print_loop:
+door_render_loop:
 	cmpq	$0, %r15
-	je	door_print_done
+	je	door_render_done
 
 	# Get the lever object's address
 	movq	%r15, %rdi
@@ -65,11 +65,11 @@ door_print_loop:
 
 	# Check that the door is on the current screen
 	cmpq	%r14, 40(%rax)
-	jne	door_print_continue
+	jne	door_render_continue
 
 	# Check that the door is closed
 	cmpq	$0, 8(%rax)
-	jne	door_print_continue
+	jne	door_render_continue
 
 	pushq	%rax
 	call	color_start_yellow
@@ -83,11 +83,11 @@ door_print_loop:
 
 	call	color_stop_yellow
 
-door_print_continue:
+door_render_continue:
 	decq	%r15
-	jmp	door_print_loop
+	jmp	door_render_loop
 
-door_print_done:
+door_render_done:
 	popq	%r15
 	popq	%r14
 	movq	%rbp, %rsp
@@ -96,9 +96,9 @@ door_print_done:
 
 
 
-# Subroutine - levers_print_levers
+# Subroutine - levers_render_levers
 # Prints all the levers-objects for the current screen
-levers_print_lever:
+levers_render_lever:
 	pushq	%rbp
 	movq	%rsp, %rbp
 	pushq	%r14
@@ -118,9 +118,9 @@ levers_print_lever:
 	# DEBUG
 	#movq	$1, %r14
 
-lever_print_loop:
+lever_render_loop:
 	cmpq	$0, %r15
-	je	lever_print_done
+	je	lever_render_done
 
 	# Get the lever address
 	movq	%r15, %rdi
@@ -143,17 +143,17 @@ lever_print_loop:
 
 	# Check that the lever is on the current screen
 	cmpq	%r14, 40(%r13)
-	jne	lever_print_continue
+	jne	lever_render_continue
 
 	# Check if the door is closed (color)
 	movq	8(%r13), %r8
 	cmpq	$0, %r8
-	je	lever_print_closed
+	je	lever_render_closed
 	call	color_start_green
-	jmp	lever_print_colored
-lever_print_closed:
+	jmp	lever_render_colored
+lever_render_closed:
 	call	color_start_red
-lever_print_colored:
+lever_render_colored:
 
 	# Get the x y and print
 	movq	56(%r13), %rdi
@@ -164,17 +164,17 @@ lever_print_colored:
 	# Check if the door is closed (color)
 	movq	8(%r13), %r8
 	cmpq	$0, %r8
-	je	lever_print_closed_stop
+	je	lever_render_closed_stop
 	call	color_stop_green
-	jmp	lever_print_continue
-lever_print_closed_stop:
+	jmp	lever_render_continue
+lever_render_closed_stop:
 	call	color_stop_red
 
-lever_print_continue:
+lever_render_continue:
 	decq	%r15
-	jmp	lever_print_loop
+	jmp	lever_render_loop
 
-lever_print_done:
+lever_render_done:
 	popq	%r15
 	popq	%r14
 	movq	%rbp, %rsp

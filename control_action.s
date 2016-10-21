@@ -1,6 +1,6 @@
 .text
-debug:			.asciz	"Debug 1 (%ul, %ul, %ul)"
-debug2:			.asciz	"Debug 2"
+lever_activate:			.asciz	"You activated the lever"
+lever_deactivate:		.asciz	"You deactivated the lever"
 
 .data
 
@@ -65,13 +65,19 @@ control_e_loop:
 	cmpq	$0, %r8
 	je	control_e_val_0
 
-	# Value is nonzero:
+	# Value is nonzero
 	movq	$0, 8(%r13)
+	movq	$lever_deactivate, %rdi
+	call	log_push
+
 	jmp	control_e_continue
 
-	# Value is zero
 control_e_val_0:
+	# Value is zero
 	movq	$1, 8(%r13)
+	movq	$lever_activate, %rdi
+	call	log_push
+
 
 control_e_continue:
 	decq	%r15

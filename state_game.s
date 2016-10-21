@@ -5,27 +5,27 @@
 
 game_print:
 
-	# Print the background
-	call	screen_print
+	# Render the screen
+	call	render_game_screen
 
-	# Print the player
-	call	player_print
+	# Render the player
+	call	render_game_player
 
-	# Print the mobs
-	call	mobs_print
+	# Render the mobs
+	call	render_game_mobs
 
-	# Print the levers
-	call	levers_print
+	# Render the levers
+	call	render_game_levers
 
-	# Print the gui
-	call	gui_print
+	# Render the gui
+	call	render_game_gui
 
-	jmp	print_state_ret
+	jmp	state_render_ret
 
 game_control:
 
-	call	player_control
+	call	control_player
 
 	call	control_action
 
-	jmp	control_state_ret
+	jmp	state_control_ret

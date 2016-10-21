@@ -36,11 +36,11 @@ main:
 	call	levers_init
 
 main_loop:
-	call	print_state				# Print the current screen to the buffer
+	call	state_render				# Print the current screen to the buffer
 
 	call	refresh					# Call Libcurses's refresh to update the screen
 
-	call	control_state				# Get a char, and process it
+	call	state_control				# Get a char, and process it
 
 	cmpq	$1, %rax				# If control_state returned 1
 	jne	main_loop				# Don't continue the main_loop

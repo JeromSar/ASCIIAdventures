@@ -2,19 +2,25 @@ objects =\
 	build/game.o \
 	build/curses.o \
 	build/keyboard.o \
-	build/data_mobs.o \
-	build/data_levers.o \
 	build/state_manager.o \
 	build/state_main_menu.o \
 	build/state_game.o \
-	build/game_screen.o \
-	build/game_gui.o \
-	build/game_player.o \
-	build/game_mobs.o \
-	build/game_levers.o \
+	build/data_player.o \
+	build/data_mobs.o \
+	build/data_levers.o \
+	build/data_menu.o \
+	build/data_actionlog.o \
+	build/render_game_screen.o \
+	build/render_game_screen_selector.o \
+	build/render_game_gui.o \
+	build/render_game_player.o \
+	build/render_game_mobs.o \
+	build/render_game_levers.o \
+	build/render_mainmenu_screen.o \
 	build/control_action.o \
-	build/screen_selector.o \
-	build/screen_main_menu.o \
+	build/control_player.o \
+	build/control_mainmenu.o \
+	build/screen_mainmenu.o \
 	build/screen_gui.o \
 	build/screen_lvl_1.o \
 

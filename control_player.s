@@ -1,42 +1,6 @@
-.text
-player_char:		.asciz	"@"
-format_char:		.asciz	"%c"
-went_up:		.asciz	"You went to the above screen."
-went_down:		.asciz	"You went to the below screen."
+.global control_player
 
-.data
-player_x:		.quad	39
-player_y:		.quad	8
-player_health:		.quad	10			# Max health
-player_money:		.quad	0
-
-.global player_x
-.global player_y
-.global player_health
-.global player_money
-
-.global player_print
-.global player_control
-
-player_print:
-	push	%rbp
-	movq	%rsp, %rbp
-
-	call	color_start_red
-
-	# Draw the player
-	movq	player_y, %rdi
-	movq	player_x, %rsi
-	movq	$player_char, %rdx
-	call	mvprintw
-
-	call	color_stop_red
-
-	movq	%rbp, %rsp
-	popq	%rbp
-	ret
-
-player_control:
+control_player:
 	push	%rbp
 	movq	%rsp, %rbp
 
@@ -56,14 +20,11 @@ player_control:
 	cmpq	%r12, key_d
 	je	control_d
 
-	jmp	player_control_done			# Unknown key
+	jmp	control_done			# Unknown key
 
 control_w:
 	cmpq	$0, %r14
 	jne	control_w_done
-
-	movq	$went_up, %rdi
-	call	log_push
 
 	# We have y=0, go to the above screen
 	decq	screen_y
@@ -77,9 +38,6 @@ control_w_done:
 control_s:
 	cmpq	GAME_HEIGHT_MINUS_ONE, %r14
 	jne	control_s_done
-
-	movq	$went_down, %rdi
-	call	log_push
 
 	# we have y=HEIGHT-1, go to the below screen
 	incq	screen_y
@@ -125,14 +83,14 @@ control_post:
 	call	mvinch
 
 	cmpq	%rax, key_space
-	jne	player_control_done
+	jne	control_done
 
 update_player_pos:
 	# Update the player position
 	movq	%r13, player_x
 	movq	%r14, player_y
 
-player_control_done:
+control_done:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret

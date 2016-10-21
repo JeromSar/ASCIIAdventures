@@ -1,13 +1,7 @@
-.data
-screen_x:		.quad	1
-screen_y:		.quad	2
-
-.global screen_x
-.global screen_y
-.global screen_print
+.global render_game_screen
 .global screen_get_id
 
-screen_print:
+render_game_screen:
 	push	%rbp
 	movq	%rsp, %rbp
 

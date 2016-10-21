@@ -5,20 +5,19 @@ state_game:		.quad	1
 .data
 current_state:		.quad	0
 
-
-.global print_state
-.global control_state
+.global state_render
+.global state_control
 .global state_main_menu
 .global state_game
 .global current_state
-.global control_state_ret
-.global print_state_ret
+.global state_control_ret
+.global state_render_ret
 
 #
-# Subroutine - print_state
+# Subroutine - render_state
 # Prints the current state
 #
-print_state:
+state_render:
 	pushq	%rbp
 	movq	%rsp, %rbp
 	pushq	%r12
@@ -34,7 +33,7 @@ print_state:
 	cmpq	%r13, state_game
 	je	game_print
 
-print_state_ret:
+state_render_ret:
 	popq	%r15
 	popq	%r14
 	popq	%r13
@@ -47,7 +46,7 @@ print_state_ret:
 # Subroutine - control_state
 # Reads a character from stdin and processes it
 #
-control_state:
+state_control:
 	pushq	%rbp
 	movq	%rsp, %rbp
 	pushq	%r12
@@ -75,7 +74,7 @@ control_state:
 	cmpq	%r13, state_game
 	je	game_control
 
-control_state_ret:
+state_control_ret:
 	popq	%r15
 	popq	%r14
 	popq	%r13

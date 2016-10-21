@@ -1,9 +1,9 @@
 .text
 mob_char:		.asciz	"W"
 
-.global mobs_print
+.global render_game_mobs
 
-mobs_print:
+render_game_mobs:
 	pushq	%rbp
 	movq	%rsp, %rbp
 
@@ -15,9 +15,9 @@ mobs_print:
 	movq	mobs_count, %r15
 	decq	%r15
 
-mobs_print_loop:
+render_loop:
 	cmpq	$0, %r15
-	je	mobs_print_done
+	je	mobs_render_done
 
 	# Get the mobs address
 	movq	%r15, %rdi
@@ -39,7 +39,7 @@ mobs_print_loop:
 
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%rax)
-	jne	mobs_print_continue
+	jne	mobs_render_continue
 
 	pushq	%rax
 	call	color_start_cyan
@@ -53,11 +53,11 @@ mobs_print_loop:
 
 	call	color_stop_cyan
 
-mobs_print_continue:
+mobs_render_continue:
 	decq	%r15
-	jmp	mobs_print_loop
+	jmp	render_loop
 
-mobs_print_done:
+mobs_render_done:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret
