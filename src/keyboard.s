@@ -6,6 +6,7 @@ key_a:		.quad	'a'
 key_enter:	.quad	'\n'
 key_space:	.quad	' '
 key_e:		.quad	'e'
+key_p:		.quad	'p'
 
 .global key_w
 .global key_s
@@ -14,3 +15,4 @@ key_e:		.quad	'e'
 .global key_enter
 .global key_space
 .global key_e
+.global key_p

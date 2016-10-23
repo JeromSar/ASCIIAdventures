@@ -1,8 +1,8 @@
 .text
 
-.global screen_main_menu
+.global screen_mainmenu
 
-screen_main_menu:
+screen_mainmenu:
 	.ascii "[]============================================================================[]"
 	.ascii "||                                                                            ||"
 	.ascii "[]============================================================================[]"

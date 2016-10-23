@@ -1,3 +1,5 @@
+.text
+
 .global control_player
 
 control_player:

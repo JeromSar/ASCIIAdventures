@@ -3,22 +3,22 @@ title:		.asciz	"Main Menu"
 opt_play:	.asciz	"[play]"
 opt_exit:	.asciz	"[exit]"
 arrow:		.asciz	">"
-num_opts:	.quad	1			# Zero-indexed
+mainmenu_opts_count:	.quad	1			# Zero-indexed
 
 .data
-select_option:	.quad	0
+mainmenu_selection:	.quad	0
 
-.global main_menu_print
-.global main_menu_control
+.global mainmenu_print
+.global mainmenu_control
 
-main_menu_print:
+mainmenu_print:
 
 	# Render the screen
 	call	render_mainmenu_screen
 
 	jmp	state_render_ret
 
-main_menu_control:
+mainmenu_control:
 
 	# Control
 	call	control_mainmenu

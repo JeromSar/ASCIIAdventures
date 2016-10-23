@@ -1,13 +1,12 @@
 .text
 
-.global control_mainmenu
+.global control_gamemenu
 
-control_mainmenu:
-	pushq	%rbp
+control_gamemenu:
+	push	%rbp
 	movq	%rsp, %rbp
 
 	# The char is stored in r12
-
 	cmpq	%r12, key_w
 	je	control_up
 
@@ -21,48 +20,55 @@ control_mainmenu:
 
 	# Up key
 control_up:
-	cmpq	$0, mainmenu_selection
+	cmpq	$0, gamemenu_selection
 	je	control_up_low
 
-	subq	$1, mainmenu_selection
+	subq	$1, gamemenu_selection
 	jmp	control_done
 control_up_low:
-	movq	mainmenu_opts_count, %r13
-	movq	%r13, mainmenu_selection
+	movq	gamemenu_opts_count, %r13
+	movq	%r13, gamemenu_selection
 	jmp	control_done
 
 	# Down key
 control_down:
-	movq	mainmenu_opts_count, %r13
-	cmpq	%r13, mainmenu_selection
+	movq	gamemenu_opts_count, %r13
+	cmpq	%r13, gamemenu_selection
 	je	control_down_high
 
-	addq	$1, mainmenu_selection
+	addq	$1, gamemenu_selection
 	jmp	control_done
 control_down_high:
-	movq	mainmenu_opts_count, %r13
-	movq	$0, mainmenu_selection
+	movq	gamemenu_opts_count, %r13
+	movq	$0, gamemenu_selection
 	jmp	control_done
 
 	# Enter key
 control_enter:
-	cmpq	$0, mainmenu_selection
-	je	control_enter_play
+	cmpq	$0, gamemenu_selection
+	je	control_enter_return
 
-	cmpq	$1, mainmenu_selection
+	cmpq	$2, gamemenu_selection
 	je	control_enter_exit
 
 	jmp	control_done
-control_enter_play:
+
+control_enter_return:
 	movq	state_game, %r8
 	movq	%r8, current_state
 	jmp	control_done
 
 control_enter_exit:
-	movq	$1, %rax			# rax=1 - exit
+	# movq	$1, %rax			# rax=1 - exit
+	movq	state_mainmenu, %r8
+	movq	%r8, current_state
 	jmp	control_done
 
 control_done:
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret

@@ -1,4 +1,3 @@
-
 .text
 test:			.asciz	"Hello world!!!"
 char_w:			.quad	'w'
@@ -35,6 +34,8 @@ main:
 	call	mobs_init
 	call	levers_init
 
+	# call	load_game
+
 main_loop:
 	call	state_render				# Print the current screen to the buffer
 
@@ -46,6 +47,7 @@ main_loop:
 	jne	main_loop				# Don't continue the main_loop
 
 main_end:
+
 	call	curses_deinit
 
 	movq	$0, %rdi

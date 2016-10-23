@@ -1,3 +1,5 @@
+.text
+
 .global render_game_screen
 .global screen_get_id
 

@@ -1,17 +1,20 @@
 .text
-state_main_menu:	.quad	0
+state_mainmenu:		.quad	0
 state_game:		.quad	1
+state_gamemenu:		.quad	2
 
 .data
 current_state:		.quad	0
 
-.global state_render
-.global state_control
-.global state_main_menu
+.global state_mainmenu
 .global state_game
+.global state_gamemenu
 .global current_state
-.global state_control_ret
+
+.global state_render
 .global state_render_ret
+.global state_control
+.global state_control_ret
 
 #
 # Subroutine - render_state
@@ -27,11 +30,14 @@ state_render:
 
 	movq	current_state, %r13
 
-	cmpq	%r13, state_main_menu
-	je	main_menu_print
+	cmpq	%r13, state_mainmenu
+	je	mainmenu_print
 
 	cmpq	%r13, state_game
 	je	game_print
+
+	cmpq	%r13, state_gamemenu
+	je	gamemenu_print
 
 state_render_ret:
 	popq	%r15
@@ -68,11 +74,14 @@ state_control:
 
 	movq	current_state, %r13
 
-	cmpq	%r13, state_main_menu
-	je	main_menu_control
+	cmpq	%r13, state_mainmenu
+	je	mainmenu_control
 
 	cmpq	%r13, state_game
 	je	game_control
+
+	cmpq	%r13, state_gamemenu
+	je	gamemenu_control
 
 state_control_ret:
 	popq	%r15

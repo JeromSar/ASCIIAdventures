@@ -16,13 +16,16 @@ control_action:
 	cmpq	%r12, key_e
 	je	control_e
 
+	cmpq	%r12, key_p
+	je	control_p
+
 control_action_done:
 	movq	%rsp, %rbp
 	popq	%rbp
 	ret
 
 
-# Action key
+# The action key is pressed - action
 control_e:
 
 	movq	levers_count, %r15			# r15 - current lever processing
@@ -84,5 +87,12 @@ control_e_continue:
 	jmp	control_e_loop
 
 control_e_done:
+
+	jmp	control_action_done
+
+# The pause key is pressed
+control_p:
+	movq	state_gamemenu, %r8
+	movq	%r8, current_state
 
 	jmp	control_action_done

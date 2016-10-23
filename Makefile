@@ -2,13 +2,16 @@ objects =\
 	$(BUILD_DIR)/game.o \
 	$(BUILD_DIR)/curses.o \
 	$(BUILD_DIR)/keyboard.o \
+	$(BUILD_DIR)/save.o \
 	$(BUILD_DIR)/state/state_manager.o \
-	$(BUILD_DIR)/state/state_mainmenu.o \
 	$(BUILD_DIR)/state/state_game.o \
+	$(BUILD_DIR)/state/state_mainmenu.o \
+	$(BUILD_DIR)/state/state_gamemenu.o \
 	$(BUILD_DIR)/data/data_player.o \
 	$(BUILD_DIR)/data/data_mobs.o \
 	$(BUILD_DIR)/data/data_levers.o \
-	$(BUILD_DIR)/data/data_menu.o \
+	$(BUILD_DIR)/data/data_mainmenu.o \
+	$(BUILD_DIR)/data/data_gamemenu.o \
 	$(BUILD_DIR)/data/data_actionlog.o \
 	$(BUILD_DIR)/render/render_game_screen.o \
 	$(BUILD_DIR)/render/render_game_screen_selector.o \
@@ -17,10 +20,13 @@ objects =\
 	$(BUILD_DIR)/render/render_game_mobs.o \
 	$(BUILD_DIR)/render/render_game_levers.o \
 	$(BUILD_DIR)/render/render_mainmenu_screen.o \
+	$(BUILD_DIR)/render/render_gamemenu_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
 	$(BUILD_DIR)/control/control_player.o \
 	$(BUILD_DIR)/control/control_mainmenu.o \
+	$(BUILD_DIR)/control/control_gamemenu.o \
 	$(BUILD_DIR)/screen/screen_mainmenu.o \
+	$(BUILD_DIR)/screen/screen_gamemenu.o \
 	$(BUILD_DIR)/screen/screen_gui.o \
 	$(BUILD_DIR)/screen/screen_lvl_1.o \
 
@@ -30,7 +36,7 @@ BUILD_DIR = build
 .PHONY: all run game clean debug
 
 define cc-command
-$(CC) -gstabs -c -o "$@" "$<"
+$(CC) -gstabs -O0 -c -o "$@" "$<"
 endef
 
 vpath %.s $(SRC_DIR)

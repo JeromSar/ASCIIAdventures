@@ -1,11 +1,11 @@
+.text
+
 .data
 action_log:		.quad   0
 			.quad	0
 			.quad	0
 			.quad	0
 action_log_index:	.quad	0
-
-.text
 
 .global action_log
 .global action_log_index

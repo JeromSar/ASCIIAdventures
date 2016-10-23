@@ -1,3 +1,5 @@
+.text
+
 .data
 screen_x:		.quad	1
 screen_y:		.quad	2

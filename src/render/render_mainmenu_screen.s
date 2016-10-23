@@ -13,7 +13,7 @@ render_mainmenu_screen:
 	# Print menu background
 	movq	$0, %rdi
 	movq	$0, %rsi
-	movq	$screen_main_menu, %rdx
+	movq	$screen_mainmenu, %rdx
 	call	mvprintw
 
 	#
@@ -54,7 +54,7 @@ render_mainmenu_screen:
 	#
 
 	# Multiply the selected option by 2, and add 11
-	movq	select_option, %rax
+	movq	mainmenu_selection, %rax
 	movq	$2, %rdx
 	mulq	%rdx
 	movq	%rax, %r12

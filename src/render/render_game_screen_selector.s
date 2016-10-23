@@ -30,8 +30,8 @@ select_screen:
 	mulq	%rdx
 	addq	screen_x, %rax
 
-	#cmpq	$15, %rax
-	#jg	screen_not_found
+	cmpq	$15, %rax
+	jg	screen_not_found
 
 	shl	$3, %rax
 	movq	screentable(%rax), %rax
