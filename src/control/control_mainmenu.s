@@ -59,7 +59,7 @@ control_enter_play:
 	jmp	control_done
 
 control_enter_exit:
-	movq	$1, %rax			# rax=1 - exit
+	movq	$1, exit_game
 	jmp	control_done
 
 control_done:

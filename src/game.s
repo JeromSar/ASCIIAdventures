@@ -14,6 +14,9 @@ HALF_HEIGHT:		.quad	12
 GAME_HEIGHT:		.quad	18
 GAME_HEIGHT_MINUS_ONE:	.quad	17
 
+.data
+exit_game:		.quad	0
+
 .global WIDTH
 .global WIDTH_MINUS_ONE
 .global HALF_WIDTH
@@ -22,6 +25,7 @@ GAME_HEIGHT_MINUS_ONE:	.quad	17
 .global HALF_HEIGHT
 .global GAME_HEIGHT
 .global GAME_HEIGHT_MINUS_ONE
+.global exit_game
 
 .global main
 .global main_end
@@ -41,7 +45,7 @@ main_loop:
 
 	call	state_control				# Get a char, and process it
 
-	cmpq	$1, %rax				# If control_state returned 1
+	cmpq	$1, exit_game				# If control_state returned 1
 	jne	main_loop				# Don't continue the main_loop
 
 main_end:
