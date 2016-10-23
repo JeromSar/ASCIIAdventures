@@ -2,6 +2,7 @@
 state_mainmenu:		.quad	0
 state_game:		.quad	1
 state_gamemenu:		.quad	2
+state_gameover:		.quad	3
 
 .data
 current_state:		.quad	0
@@ -9,6 +10,7 @@ current_state:		.quad	0
 .global state_mainmenu
 .global state_game
 .global state_gamemenu
+.global state_gameover
 .global current_state
 
 .global state_render
@@ -38,6 +40,9 @@ state_render:
 
 	cmpq	%r13, state_gamemenu
 	je	gamemenu_print
+
+	cmpq	%r13, state_gameover
+	je	gameover_print
 
 state_render_ret:
 	popq	%r15
@@ -82,6 +87,9 @@ state_control:
 
 	cmpq	%r13, state_gamemenu
 	je	gamemenu_control
+
+	cmpq	%r13, state_gameover
+	je	gameover_control
 
 state_control_ret:
 	popq	%r15

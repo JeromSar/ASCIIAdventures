@@ -14,7 +14,7 @@ bytes_per_lever:	.quad	128
 #	8	40	scr_lever	-
 #	8	48	x_lever		-
 #	8	56	y_lever		-
-levers:			.bss	2048
+levers:			.skip	2048
 
 .data
 levers_count:		.quad	1

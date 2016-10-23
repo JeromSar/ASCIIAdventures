@@ -1,5 +1,7 @@
 .text
 bytes_per_mob:		.quad	128
+name_wolf:		.asciz	"wolf"
+name_unknown:		.asciz	"monster"
 
 .bss
 #
@@ -23,6 +25,7 @@ mobs_count:		.quad	1
 .global mobs
 .global mobs_init
 .global mobs_id_to_addr
+.global mobs_type_to_name
 
 mobs_init:
 	pushq	%rbp
@@ -61,6 +64,25 @@ mobs_id_to_addr:
 	popq	%rbp
 	ret
 
+mobs_type_to_name:
+	pushq	%rbp
+	movq	%rsp, %rbp
+
+	cmpq	$0, %rdi
+	je	mobs_type_to_name_wolf
+
+	movq	$name_unknown, %rax
+	jmp	mobs_type_to_name_done
+
+mobs_type_to_name_wolf:
+	movq	$name_wolf, %rax
+	jmp	mobs_type_to_name_done
+
+mobs_type_to_name_done:
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
 # Subroutine - make_wolf
 # Creates a new wolf, and returns its ID
 # %rdi - the screen id
@@ -92,7 +114,7 @@ make_wolf:
 	movq	%rsi, 24(%r13)				# x_pos		%rsi
 	movq	%rdx, 32(%r13)				# y_pos		%rdx
 	movq	$10, 40(%r13)				# health	10
-	movq	$2, 48(%r13)				# damage	2
+	movq	$1, 48(%r13)				# damage	1
 
 	# Return the mob ID
 	movq	%r12, %rax

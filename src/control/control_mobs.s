@@ -1,4 +1,5 @@
 .text
+attacked:		.asciz	"The %s attacked you and dealt %lu damage"
 
 .global control_mobs
 
@@ -24,27 +25,28 @@ control_loop:
 	call	mobs_id_to_addr
 	movq	%rax, %r13
 
-	# DEBUG - Print some debug information
-	# pushq	%rax
-	# movq	%r14, %rdi
-	# movq	$4, %rsi
-	# incq	%r14
-	# movq	$debug, %rdx
-	# movq	16(%rax), %rcx
-	# movq	24(%rax), %r8
-	# movq	32(%rax), %r9
-	# movq	$0, %rax
-	# call	mvprintw
-	# popq	%rax
-	# DEBUG - end
-
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%r13)
 	jne	control_continue
 
+	# (x,y) in r8, r9
+	movq	24(%r13), %r8
+	movq	32(%r13), %r9
+
+	# Compare x
+	cmpq	%r8, player_x
+	je	equal_x
+
+	# Compare y
+	cmpq	%r9, player_y
+	je	equal_y
+
+	# GO PATHFINDING! :D
+
+control_pathfinding:
 	# Do pathfinding
-	movq	24(%r13), %rdi
-	movq	32(%r13), %rsi
+	movq	%r8, %rdi
+	movq	%r9, %rsi
 	call	pathfinding
 
 	cmpq	$0, %rax
@@ -74,6 +76,55 @@ control_done:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret
+
+equal_x:
+	incq	%r9
+	cmpq	%r9, player_y
+	je	attack_player
+
+	subq	$2, %r9
+	cmpq	%r9, player_y
+	je	attack_player
+
+	jmp	control_pathfinding
+
+equal_y:
+	incq	%r8
+	cmpq	%r8, player_x
+	je	attack_player
+
+	subq	$2, %r8
+	cmpq	%r8, player_x
+	je	attack_player
+
+	jmp	control_pathfinding
+
+attack_player:
+	movq	48(%r13), %r8
+
+	# Are we dead?
+	cmpq	%r8, player_health
+	jle	player_dead
+
+	# Do the damage
+	subq	%r8, player_health
+
+	# Get the mob name
+	movq	8(%r13), %rdi
+	call	mobs_type_to_name
+
+	# Push a message
+	movq	$attacked, %rdi
+	movq	%rax, %rsi
+	movq	48(%r13), %rdx
+	call	log_push
+
+	jmp	control_continue
+
+player_dead:
+	movq	state_gameover, %r8
+	movq	%r8, current_state
+	jmp	control_continue
 
 go_east:
 	incq	24(%r13)

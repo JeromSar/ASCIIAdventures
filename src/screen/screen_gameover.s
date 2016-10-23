@@ -1,0 +1,30 @@
+.text
+
+.global screen_gameover
+
+screen_gameover:
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                  GAME OVER                                     "
+	.ascii "                                                                                "
+	.ascii "                                  You died.                                     "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.ascii "                           (Press enter to continue)                            "
+	.ascii "                                                                                "
+	.ascii "                                                                                "
+	.asciz ""

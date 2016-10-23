@@ -16,7 +16,7 @@ render_game_levers:
 
 	movq	%rbp, %rsp
 	popq	%rbp
-
+	ret
 
 
 # Subroutine - levers_render_door
