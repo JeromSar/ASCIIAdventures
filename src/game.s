@@ -34,8 +34,6 @@ main:
 	call	mobs_init
 	call	levers_init
 
-	# call	load_game
-
 main_loop:
 	call	state_render				# Print the current screen to the buffer
 
