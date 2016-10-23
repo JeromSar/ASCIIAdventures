@@ -11,7 +11,6 @@ render_game_mobs:
 	call	screen_get_id
 	movq	%rax, %r14
 
-	# Print mobs
 	movq	mobs_count, %r15
 	decq	%r15
 

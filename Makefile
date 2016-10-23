@@ -8,6 +8,7 @@ objects =\
 	$(BUILD_DIR)/state/state_mainmenu.o \
 	$(BUILD_DIR)/state/state_gamemenu.o \
 	$(BUILD_DIR)/data/data_player.o \
+	$(BUILD_DIR)/data/data_screen.o \
 	$(BUILD_DIR)/data/data_mobs.o \
 	$(BUILD_DIR)/data/data_levers.o \
 	$(BUILD_DIR)/data/data_mainmenu.o \
@@ -25,6 +26,7 @@ objects =\
 	$(BUILD_DIR)/control/control_player.o \
 	$(BUILD_DIR)/control/control_mainmenu.o \
 	$(BUILD_DIR)/control/control_gamemenu.o \
+	$(BUILD_DIR)/control/control_mobs.o \
 	$(BUILD_DIR)/screen/screen_mainmenu.o \
 	$(BUILD_DIR)/screen/screen_gamemenu.o \
 	$(BUILD_DIR)/screen/screen_gui.o \

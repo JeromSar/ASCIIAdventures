@@ -41,9 +41,9 @@ main_loop:
 
 	call	state_control				# Get a char, and process it
 
-	cmpq	$1, %rax				# If control_state returned 1
-	jne	main_loop				# Don't continue the main_loop
-
+	# cmpq	$1, %rax				# If control_state returned 1
+	# jne	main_loop				# Don't continue the main_loop
+	jmp	main_loop
 main_end:
 
 	call	curses_deinit

@@ -17,7 +17,7 @@ current_state:		.quad	0
 .global state_control_ret
 
 #
-# Subroutine - render_state
+# Subroutine - state_render
 # Prints the current state
 #
 state_render:
@@ -49,7 +49,7 @@ state_render_ret:
 	ret
 
 #
-# Subroutine - control_state
+# Subroutine - state_control
 # Reads a character from stdin and processes it
 #
 state_control:

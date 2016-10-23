@@ -1,5 +1,6 @@
 .text
 bytes_per_node:		.quad	24
+debug:			.asciz	"There is a /%c/ at (%ul, %ul)"
 
 .bss
 #
@@ -15,8 +16,9 @@ counter:		.quad	1
 mob_address:		.quad	0
 player_address:		.quad	0
 mob_goto:		.quad	4
-test_x:			.quad	0
-test_y:			.quad	0
+debug_v:		.quad	0
+
+.global pathfinding
 
 node_address:
 	pushq	%rbp
@@ -43,6 +45,20 @@ pathfinding:
 	pushq	%r14				# pushes r14 to save it
 	pushq	%r15
 
+	# Reset some data
+	movq	$4, mob_goto
+	movq	$1, counter
+	movq	$0, %r8
+	movq	$nodes, %r9
+reset_loop:
+	movq	$0, (%r9)
+
+	incq	%r9
+	incq	%r8
+	cmpq	$34536, %r8
+	jne	reset_loop
+	# Reset done
+
 	movq	player_x, %rdi			# moving player_x to rdi
 	movq	player_y, %rsi			# moving player_y to rsi
 	call	node_address			# returns addres of x and y
@@ -59,6 +75,9 @@ pathfinding:
 pathfinding_loop:
 	movq	$nodes, %r15
 
+	# Check if the path is too long
+	cmpq	$50, counter
+	jg	pathfinding_end
 
 loop_inside_loop:
 	movq	counter, %r8
@@ -120,7 +139,7 @@ east:
 	addq	$24, %r12			# adds 40 to gain acces to the node east
 
 	pushq	%rax
-	movq	%rax, %rdi
+	movq	%r12, %rdi
 	call	walk_check
 	cmpq	$0, %rax
 	popq	%rax
@@ -146,7 +165,7 @@ north:
 	subq	$1920, %r12			# subs 3200 to gain acces to the node north
 
 	pushq	%rax
-	movq	%rax, %rdi
+	movq	%r12, %rdi
 	call	walk_check
 	cmpq	$0, %rax
 	popq	%rax
@@ -171,7 +190,7 @@ west:
 	subq	$24, %r12			# subs 24 to rax to gain acces to the node west
 
 	pushq	%rax
-	movq	%rax, %rdi
+	movq	%r12, %rdi
 	call	walk_check
 	cmpq	$0, %rax
 	popq	%rax
@@ -197,7 +216,7 @@ south:
 	addq	$1920, %r12			# adds 3200 to rax to gain acces to the node south
 
 	pushq	%rax
-	movq	%rax, %rdi
+	movq	%r12, %rdi
 	call	walk_check
 	cmpq	$0, %rax
 	popq	%rax
@@ -331,12 +350,10 @@ address_x_loop:
 
 
 walk_check_end:
-	movq	%r14, %rdi
-	movq	%r14, test_x
-	movq	%r13, %rsi
-	movq	%r13, test_y
-#	call	is_traversable			# comment for grip with no walls
-	movq	$1, %rax			# uncomment for grid with no walls
+	movq	%r14, %rdi		# r14 - x
+	movq	%r13, %rsi		# r13 - y
+
+	call	screen_is_traversable
 
 	popq	%r14
 	popq	%r13
