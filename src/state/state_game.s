@@ -32,4 +32,6 @@ game_control:
 
 	call	control_action
 
+	call	control_mobs
+
 	jmp	state_control_ret

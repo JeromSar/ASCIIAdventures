@@ -32,9 +32,9 @@ keys_init:
 	movq	%rsp, %rbp
 
 	# values to be placed
-	movq	$10, %rdi				# scr_id
-	movq	$5, %rsi				# x_key
-	movq	$12, %rdx				# y_key
+	movq	$9, %rdi				# scr_id
+	movq	$9, %rsi				# x_key
+	movq	$9, %rdx				# y_key
 	movq	$0, %rcx				# key_colour
 	movq	$0, %r8					# key_state
 	call	make_key
@@ -76,7 +76,7 @@ make_key:
 	pushq	%rcx
 	pushq	%r8
 	movq	%r12, %rdi
-	call	key_id_to_addr
+	call	keys_id_to_addr
 	movq	%rax, %r13				# Store lever addr in r13
 	popq	%r8
 	popq	%rcx

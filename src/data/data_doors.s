@@ -32,11 +32,11 @@ doors_init:
 	movq	%rsp, %rbp
 
 	# values to be placed
-	movq	$10, %rdi				# scr_id
-	movq	$7, %rsi				# x_key
-	movq	$13, %rdx				# y_key
-	movq	$0, %rcx				# key_colour
-	movq	$0, %r8
+	movq	$9, %rdi				# scr_id
+	movq	$9, %rsi				# x_door
+	movq	$8, %rdx				# y_door
+	movq	$1, %rcx				# door_colour
+	movq	$0, %r8					# door_state
 	call	make_door
 
 	movq	%rbp, %rsp
@@ -51,7 +51,7 @@ doors_id_to_addr:
 	movq	%rsp, %rbp
 
 	movq	%rdi, %rax
-	movq	bytes_per_door, %rdx			# Amt. of bytes reserved per lever
+	movq	bytes_per_door, %rdx			# Amt. of bytes reserved per door
 	mulq	%rdx					# Result in rax
 
 	addq	$doors, %rax				# %rax acts as the offset
@@ -76,7 +76,7 @@ make_door:
 	pushq	%rcx
 	pushq	%r8
 	movq	%r12, %rdi
-	call	door_id_to_addr
+	call	doors_id_to_addr
 	movq	%rax, %r13				# Store lever addr in r13
 	popq	%r8
 	popq	%rcx

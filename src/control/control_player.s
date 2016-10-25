@@ -92,6 +92,8 @@ update_player_pos:
 	movq	%r13, player_x
 	movq	%r14, player_y
 
+	call	refresh
+
 control_done:
 	movq	%rbp, %rsp
 	popq	%rbp

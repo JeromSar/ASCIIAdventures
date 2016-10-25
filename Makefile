@@ -7,7 +7,9 @@ objects =\
 	$(BUILD_DIR)/state/state_game.o \
 	$(BUILD_DIR)/state/state_mainmenu.o \
 	$(BUILD_DIR)/state/state_gamemenu.o \
+	$(BUILD_DIR)/state/state_gameover.o \
 	$(BUILD_DIR)/data/data_player.o \
+	$(BUILD_DIR)/data/data_screen.o \
 	$(BUILD_DIR)/data/data_mobs.o \
 	$(BUILD_DIR)/data/data_levers.o \
 	$(BUILD_DIR)/data/data_mainmenu.o \
@@ -25,12 +27,16 @@ objects =\
 	$(BUILD_DIR)/render/render_gamemenu_screen.o \
 	$(BUILD_DIR)/render/render_game_keys.o \
 	$(BUILD_DIR)/render/render_game_doors.o \
+	$(BUILD_DIR)/render/render_gameover_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
 	$(BUILD_DIR)/control/control_player.o \
+	$(BUILD_DIR)/control/control_mobs.o \
 	$(BUILD_DIR)/control/control_mainmenu.o \
 	$(BUILD_DIR)/control/control_gamemenu.o \
+	$(BUILD_DIR)/control/control_gameover.o \
 	$(BUILD_DIR)/screen/screen_mainmenu.o \
 	$(BUILD_DIR)/screen/screen_gamemenu.o \
+	$(BUILD_DIR)/screen/screen_gameover.o \
 	$(BUILD_DIR)/screen/screen_gui.o \
 	$(BUILD_DIR)/screen/screen_lvl_1.o \
 

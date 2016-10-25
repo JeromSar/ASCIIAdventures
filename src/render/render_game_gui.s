@@ -118,6 +118,7 @@ render_log:
 	movq	%rsp, %rbp
 	pushq	%r13
 	pushq	%r14
+	pushq	%r15
 
 	call	color_start_cyan
 
@@ -125,17 +126,28 @@ render_log:
 	movq	$4, %r14					# r14 - amount of lines left
 
 render_log_loop:
-	movq	%r13, %r9
-	shl	$3, %r9
-	movq	action_log(%r9), %r8				# Get the value at the index, store in r8
-	cmpq	$0, %r8						# If the value is 0
+	movq	%r13, %r15					# r15 - current offset
+	shl	$3, %r15
+	shl	$2, %r15
+
+	# Is there a value
+	movq	action_log(%r15), %rdx				# Get the value at the index, store in r8
+	cmpq	$0, %rdx					# If the value is 0
 	je	render_log_skip					# Don't print it
+
 	# Call mvprintw(y,x, action_log())
 	movq	%r14, %rdi
 	addq	$18, %rdi
 	movq	$20, %rsi
-	movq	%r8, %rdx
+	# rdx is already set
+	addq	$8, %r15
+	movq	action_log(%r15), %rcx
+	addq	$8, %r15
+	movq	action_log(%r15), %r8
+	addq	$8, %r15
+	movq	action_log(%r15), %r9
 	call	mvprintw
+
 render_log_skip:
 
 	cmpq	$0, %r13					# Was this the last index?
@@ -145,12 +157,13 @@ render_log_skip:
 render_log_no_reset:
 	decq	%r13						# index--
 
-	decq	%r14						# One line less
+	decq	%r14						# lines--
 	cmpq	$0, %r14
 	jne	render_log_loop					# As long as the amount of lines != 0, loop
 
 	call	color_stop_cyan
 
+	popq	%r15
 	pushq	%r14
 	pushq	%r13
 	movq	%rbp, %rsp

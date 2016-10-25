@@ -10,7 +10,7 @@ render_game_keys:
 	pushq	%r14
 	pushq	%r15
 
-	call	get_screen_id
+	call	screen_get_id
 	movq	%rax, %r14
 
 	movq	keys_count, %r15
@@ -24,10 +24,10 @@ key_render_loop:
 
 	call	keys_id_to_addr
 
-	cmpq	%r14, 8(%rax)
+	cmpq	%r14, 8(%rax)			# checks if door is to be printed
 	jne	key_render_continue
 
-	cmpq	$0, 40(%rax)
+	cmpq	$0, 40(%rax)			# checks if door is to be printed
 	jne	key_render_continue
 
 	cmpq	$0, 32(%rax)
@@ -60,6 +60,7 @@ print_key:
 	movq	24(%rax), %rdi
 	movq	16(%rax), %rsi
 	movq	$key_char, %rdx
+	movq	$0, %rax
 	call	mvprintw
 	popq	%rax
 

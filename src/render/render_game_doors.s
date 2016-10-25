@@ -10,7 +10,7 @@ render_game_doors:
 	pushq	%r14
 	pushq	%r15
 
-	call	get_screen_id
+	call	screen_get_id
 	movq	%rax, %r14
 
 	movq	doors_count, %r15
@@ -24,13 +24,13 @@ door_render_loop:
 
 	call	doors_id_to_addr
 
-	cmpq	%r14, 8(%rax)
+	cmpq	%r14, 8(%rax)			# checks if door is to be printed
 	jne	door_render_continue
 
-	cmpq	$0, 40(%rax)
+	cmpq	$0, 40(%rax)			# checks if door is to be printed
 	jne	door_render_continue
 
-	cmpq	$0, 32(%rax)
+	cmpq	$0, 32(%rax)			# checks if colour is blue
 	jne	red
 
 	pushq	%rax
@@ -40,7 +40,7 @@ door_render_loop:
 	jmp	print_door
 
 red:
-	cmpq	$1, 32(%rax)
+	cmpq	$1, 32(%rax)			# checks if colour is red
 	jne	green
 
 	pushq	%rax
@@ -60,6 +60,7 @@ print_door:
 	movq	24(%rax), %rdi
 	movq	16(%rax), %rsi
 	movq	$door_char, %rdx
+	movq	$0, %rax
 	call	mvprintw
 	popq	%rax
 
@@ -79,7 +80,7 @@ green_stop:
 
 door_render_continue:
 	decq	%r15
-	jmp	key_render_loop
+	jmp	door_render_loop
 
 door_render_done:
 	popq	%r15
