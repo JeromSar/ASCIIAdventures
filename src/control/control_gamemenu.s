@@ -1,4 +1,5 @@
 .text
+game_saved:		.asciz	"Game saved"
 
 .global control_gamemenu
 
@@ -16,7 +17,7 @@ control_gamemenu:
 	cmpq	%r12, key_enter
 	je	control_enter
 
-	jmp	control_done			# Unknown key
+	jmp	control_done					# Unknown key
 
 	# Up key
 control_up:
@@ -48,6 +49,9 @@ control_enter:
 	cmpq	$0, gamemenu_selection
 	je	control_enter_return
 
+	cmpq	$1, gamemenu_selection
+	je	control_enter_save
+
 	cmpq	$2, gamemenu_selection
 	je	control_enter_exit
 
@@ -58,8 +62,18 @@ control_enter_return:
 	movq	%r8, current_state
 	jmp	control_done
 
+control_enter_save:
+	call	save_game
+
+	movq	$game_saved, %rdi
+	call	log_push
+
+	movq	state_game, %r8
+	movq	%r8, current_state
+	jmp	control_done
+
 control_enter_exit:
-	# movq	$1, %rax			# rax=1 - exit
+	# movq	$1, %rax					# rax=1 - exit
 	movq	state_mainmenu, %r8
 	movq	%r8, current_state
 	jmp	control_done

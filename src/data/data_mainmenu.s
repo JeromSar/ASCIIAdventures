@@ -1,5 +1,5 @@
 .text
-mainmenu_opts_count:	.quad	1
+mainmenu_opts_count:	.quad	2
 
 .data
 mainmenu_selection:	.quad	0

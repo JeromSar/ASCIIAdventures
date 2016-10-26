@@ -1,4 +1,5 @@
 .text
+game_loaded:		.asciz	"Game loaded from save"
 
 .global control_mainmenu
 
@@ -50,10 +51,24 @@ control_enter:
 	je	control_enter_play
 
 	cmpq	$1, mainmenu_selection
+	je	control_enter_load
+
+	cmpq	$2, mainmenu_selection
 	je	control_enter_exit
 
 	jmp	control_done
+
 control_enter_play:
+	movq	state_game, %r8
+	movq	%r8, current_state
+	jmp	control_done
+
+control_enter_load:
+	call	load_game
+
+	movq	$game_loaded, %rdi
+	call	log_push
+
 	movq	state_game, %r8
 	movq	%r8, current_state
 	jmp	control_done
