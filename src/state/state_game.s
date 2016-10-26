@@ -17,6 +17,10 @@ game_print:
 	# Render the levers
 	call	render_game_levers
 
+	call	render_game_keys
+
+	call	render_game_doors
+
 	# Render the gui
 	call	render_game_gui
 

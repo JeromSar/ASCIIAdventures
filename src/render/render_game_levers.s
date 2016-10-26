@@ -39,7 +39,7 @@ levers_render_door:
 	decq	%r15
 
 	# DEBUG
-	#movq	$1, %r14
+	# movq	$1, %r14
 
 door_render_loop:
 	cmpq	$0, %r15
@@ -50,17 +50,17 @@ door_render_loop:
 	call	levers_id_to_addr
 
 	# DEBUG - Print some debug information
-	#pushq	%rax
-	#movq	%r14, %rdi
-	#movq	$1, %rsi
-	#incq	%r14
-	#movq	$debug, %rdx
-	#movq	40(%rax), %rcx
-	#movq	48(%rax), %r8
-	#movq	56(%rax), %r9
-	#movq	$0, %rax
-	#call	mvprintw
-	#popq	%rax
+	# pushq	%rax
+	# movq	%r14, %rdi
+	# movq	$1, %rsi
+	# incq	%r14
+	# movq	$debug, %rdx
+	# movq	40(%rax), %rcx
+	# movq	48(%rax), %r8
+	# movq	56(%rax), %r9
+	# movq	$0, %rax
+	# call	mvprintw
+	# popq	%rax
 	# DEBUG - end
 
 	# Check that the door is on the current screen
@@ -116,7 +116,7 @@ levers_render_lever:
 	decq	%r15
 
 	# DEBUG
-	#movq	$1, %r14
+	# movq	$1, %r14
 
 lever_render_loop:
 	cmpq	$0, %r15
@@ -128,17 +128,17 @@ lever_render_loop:
 	movq	%rax, %r13				# r13 - lever addr
 
 	# DEBUG - Print some debug information
-	#pushq	%rax
-	#movq	%r14, %rdi
-	#movq	$1, %rsi
-	#incq	%r14
-	#movq	$debug, %rdx
-	#movq	40(%rax), %rcx
-	#movq	48(%rax), %r8
-	#movq	56(%rax), %r9
-	#movq	$0, %rax
-	#call	mvprintw
-	#popq	%rax
+	# pushq	%rax
+	# movq	%r14, %rdi
+	# movq	$1, %rsi
+	# incq	%r14
+	# movq	$debug, %rdx
+	# movq	40(%rax), %rcx
+	# movq	48(%rax), %r8
+	# movq	56(%rax), %r9
+	# movq	$0, %rax
+	# call	mvprintw
+	# popq	%rax
 	# DEBUG - end
 
 	# Check that the lever is on the current screen

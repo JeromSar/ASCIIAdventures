@@ -16,6 +16,8 @@ objects =\
 	$(BUILD_DIR)/data/data_mainmenu.o \
 	$(BUILD_DIR)/data/data_gamemenu.o \
 	$(BUILD_DIR)/data/data_actionlog.o \
+	$(BUILD_DIR)/data/data_keys.o \
+	$(BUILD_DIR)/data/data_doors.o \
 	$(BUILD_DIR)/render/render_game_screen.o \
 	$(BUILD_DIR)/render/render_game_screen_selector.o \
 	$(BUILD_DIR)/render/render_game_gui.o \
@@ -24,6 +26,8 @@ objects =\
 	$(BUILD_DIR)/render/render_game_levers.o \
 	$(BUILD_DIR)/render/render_mainmenu_screen.o \
 	$(BUILD_DIR)/render/render_gamemenu_screen.o \
+	$(BUILD_DIR)/render/render_game_keys.o \
+	$(BUILD_DIR)/render/render_game_doors.o \
 	$(BUILD_DIR)/render/render_gameover_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
 	$(BUILD_DIR)/control/control_player.o \
@@ -36,6 +40,7 @@ objects =\
 	$(BUILD_DIR)/screen/screen_gameover.o \
 	$(BUILD_DIR)/screen/screen_gui.o \
 	$(BUILD_DIR)/screen/screen_lvl_1.o \
+
 
 SRC_DIR = src
 BUILD_DIR = build

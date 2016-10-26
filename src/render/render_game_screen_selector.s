@@ -37,7 +37,7 @@ select_screen:
 	movq	screentable(%rax), %rax
 
 
-	#movq	$lvl_1_12, %rax
+#	movq	$lvl_1_12, %rax
 
 	movq	%rbp, %rsp
 	popq	%rbp
