@@ -39,6 +39,7 @@ main:
 	call	levers_init
 	call	doors_init
 	call	keys_init
+	call	chests_init
 
 main_loop:
 	call	state_render				# Print the current screen to the buffer

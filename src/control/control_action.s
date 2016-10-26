@@ -4,14 +4,17 @@ lever_deactivate:		.asciz	"You deactivated the lever"
 key_deactivate:			.asciz	"You found a key"
 door_deactivate:		.asciz	"You open the door with the key"
 door_door_no_keys:		.asciz	"You do not have the right key"
+chest_deactivate:		.asciz	"You opend a chest"
 debuq:				.asciz	"runs till here"
 debuq2:				.asciz	"screen id is %ld"
+debug:				.asciz	"Door at (%lu, %lu)"
 
 .data
 this_x:				.quad 0
 this_y:				.quad 0
 
 .global control_action
+.global control_chest_return
 
 control_action:
 	pushq	%rbp
@@ -45,7 +48,8 @@ control_e:
 	# call east
 	call	control_levers
 	call	control_keys
-#	call	control_doors
+	call	control_doors
+	call	control_chests
 
 	# north
 	decq	this_x
@@ -54,7 +58,8 @@ control_e:
 	# call north
 	call	control_levers
 	call	control_keys
-#	call	control_doors
+	call	control_doors
+	call	control_chests
 
 	# west
 	decq	this_x
@@ -63,7 +68,8 @@ control_e:
 	# call west
 	call	control_levers
 	call	control_keys
-#	call	control_doors
+	call	control_doors
+	call	control_chests
 
 	# south
 	incq	this_x
@@ -72,7 +78,8 @@ control_e:
 	# call south
 	call	control_levers
 	call	control_keys
-#	call	control_doors
+	call	control_doors
+	call	control_chests
 
 	jmp	control_action_done
 
@@ -171,7 +178,7 @@ control_key_loop:
 	cmpq	%r9, 24(%r13)
 	jne	control_key_continue
 
-	# Toggle the lever
+	# Pickup the key
 	movq	40(%r13), %r8
 	cmpq	$1, %r8
 	je	control_key_continue
@@ -221,6 +228,7 @@ control_doors:
 	pushq	%r14
 	pushq	%r15
 	movq	doors_count, %r15			# r15 - current door processing
+	decq	%r15
 
 control_door_loop:
 	cmpq	$0, %r15
@@ -232,8 +240,8 @@ control_door_loop:
 	movq	%rax, %r13				# r13 - current lever address
 
 	# Check that the door is on the current screen
-#	cmpq	%r14, 8(%r13)
-	cmpq	$9, %r14
+	cmpq	%r14, 8(%r13)
+#	cmpq	$9, %r14
 	jne	control_door_continue
 
 	# Compare the x and y of the door
@@ -241,13 +249,11 @@ control_door_loop:
 	movq	this_x,	%r8				# moving x to r8 (x)
 
 	cmpq	%r8, 16(%r13)
+#	cmpq	$0, 16(%r13)
 	jne	control_door_continue
 
-	movq	$debuq2, %rdi
-	movq	%r15, %rsi
-	call	log_push
-
 	cmpq	%r9, 24(%r13)
+#	cmpq	$0,24(%r13)
 	jne	control_door_continue
 
 	# Toggle the door
@@ -258,6 +264,7 @@ control_door_loop:
 	cmpq	$0, 32(%r13)
 	jne	red_door
 
+	# Door is blue
 	cmpq	$0, player_blue_keys
 	je	key_colour_not_found
 
@@ -267,7 +274,7 @@ control_door_loop:
 	call	log_push
 
 	decq	player_blue_keys
-	jmp	key_colour_done
+	jmp	control_door_continue
 
 red_door:
 	cmpq	$1, 32(%r13)
@@ -298,7 +305,6 @@ green_door:
 
 key_colour_not_found:
 	# Value is zero
-	movq	$1, 40(%r13)
 	movq	$door_door_no_keys, %rdi
 	call	log_push
 
@@ -307,6 +313,66 @@ control_door_continue:
 	jmp	control_key_loop
 
 control_door_done:
+	popq	%r15
+	popq	%r14
+	popq	%r13
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
+
+# controls chests
+control_chests:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r13
+	pushq	%r14
+	pushq	%r15
+	movq	chests_count, %r15			# r15 - current lever processing
+
+control_chest_loop:
+	cmpq	$0, %r15
+	je	control_chest_done
+
+	# Get the chest object's address
+	movq	%r15, %rdi
+	call	chest_id_to_addr
+	movq	%rax, %r13				# r13 - current lever address
+
+	# Check that the chest is on the current screen
+	cmpq	%r14, 8(%r13)
+	jne	control_chest_continue
+
+	# Compare the x and y of the chest
+	movq	this_y,	%r9				# moving y to r9 (y)
+	movq	this_x,	%r8				# moving x to r8 (x)
+
+	cmpq	%r8, 16(%r13)
+	jne	control_chest_continue
+
+	cmpq	%r9, 24(%r13)
+	jne	control_chest_continue
+
+	# open the chest
+	movq	32(%r13), %r8
+	cmpq	$1, %r8
+	je	control_chest_continue
+
+	# de-render the chest
+	movq	$1, 32(%r13)
+	movq	$chest_deactivate, %rdi
+	call	log_push
+
+	movq	40(%r13), %rdi
+	jmp	%rdi
+
+control_chest_return:
+
+control_chest_continue:
+	decq	%r15
+	jmp	control_chest_loop
+
+control_chest_done:
 	popq	%r15
 	popq	%r14
 	popq	%r13

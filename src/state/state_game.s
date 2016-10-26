@@ -21,6 +21,8 @@ game_print:
 
 	call	render_game_doors
 
+	call	render_game_chests
+
 	# Render the gui
 	call	render_game_gui
 
