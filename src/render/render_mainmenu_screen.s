@@ -1,6 +1,7 @@
 .text
 title:		.asciz	"Main Menu"
 opt_play:	.asciz	"[play]"
+opt_load:	.asciz	"[load]"
 opt_exit:	.asciz	"[exit]"
 arrow:		.asciz	">"
 
@@ -39,6 +40,14 @@ render_mainmenu_screen:
 	movq	%r12, %rdi
 	movq	%r13, %rsi
 	movq	$opt_play, %rdx
+	call	mvprintw
+
+	addq	$2, %r12
+
+	# Load
+	movq	%r12, %rdi
+	movq	%r13, %rsi
+	movq	$opt_load, %rdx
 	call	mvprintw
 
 	addq	$2, %r12

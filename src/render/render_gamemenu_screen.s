@@ -1,8 +1,8 @@
 .text
 title:				.asciz	"Paused"
-text_return:			.asciz	"[Return to game]"
-text_save:			.asciz	"[Save game]"
-text_exit:			.asciz	"[Exit]"
+text_return:			.asciz	"[return to game]"
+text_save:			.asciz	"[save game]"
+text_exit:			.asciz	"[exit]"
 arrow:				.asciz	">"
 
 .global render_gamemenu_screen

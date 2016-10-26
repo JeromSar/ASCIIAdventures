@@ -14,12 +14,13 @@ name_unknown:		.asciz	"monster"
 #	8	32	y_pos	-
 #	8	40	health	-
 #	8	48	damage	-
-mobs:			.skip	2048			# 16 mobs (128*8)
+mobs_bytes:		.skip	2048			# 16 mobs (128*8)
 
 .data
 mobs_count:		.quad	1
 
 
+.global mobs_bytes
 .global mobs_count
 
 .global mobs
@@ -58,7 +59,7 @@ mobs_id_to_addr:
 	movq	bytes_per_mob, %rdx			# Amt. of bytes reserved per mob
 	mulq	%rdx					# Result in rax
 
-	addq	$mobs, %rax				# %rax acts as the offset
+	addq	$mobs_bytes, %rax			# %rax acts as the offset
 
 	movq	%rbp, %rsp
 	popq	%rbp

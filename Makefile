@@ -3,6 +3,7 @@ objects =\
 	$(BUILD_DIR)/curses.o \
 	$(BUILD_DIR)/keyboard.o \
 	$(BUILD_DIR)/pathfinding.o \
+	$(BUILD_DIR)/save.o \
 	$(BUILD_DIR)/state/state_manager.o \
 	$(BUILD_DIR)/state/state_game.o \
 	$(BUILD_DIR)/state/state_mainmenu.o \

@@ -14,11 +14,13 @@ bytes_per_lever:	.quad	128
 #	8	40	scr_lever	-
 #	8	48	x_lever		-
 #	8	56	y_lever		-
-levers:			.skip	2048
+levers_bytes:		.skip	2048
 
 .data
 levers_count:		.quad	1
 
+.global levers_bytes
+.global levers_bytes_size
 .global levers_count
 
 .global levers_init
@@ -52,7 +54,7 @@ levers_id_to_addr:
 	movq	bytes_per_lever, %rdx			# Amt. of bytes reserved per lever
 	mulq	%rdx					# Result in rax
 
-	addq	$levers, %rax				# %rax acts as the offset
+	addq	$levers_bytes, %rax			# %rax acts as the offset
 
 	movq	%rbp, %rsp
 	popq	%rbp
