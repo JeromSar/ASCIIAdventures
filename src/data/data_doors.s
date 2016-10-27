@@ -3,7 +3,7 @@ bytes_per_door:	.quad	64
 
 .bss
 #
-# Lever Data Representation (LDR)
+# Door Data Representation (DDR)
 # 	Length	Offset	Name		Values
 #	8	0	id		-
 #	8	8	scr_id		-
@@ -32,10 +32,10 @@ doors_init:
 	movq	%rsp, %rbp
 
 	# values to be placed
-	movq	$9, %rdi				# scr_id
+	movq	$10, %rdi				# scr_id
 	movq	$9, %rsi				# x_door
 	movq	$8, %rdx				# y_door
-	movq	$1, %rcx				# door_colour
+	movq	$0, %rcx				# door_colour
 	movq	$0, %r8					# door_state
 	call	make_door
 

@@ -92,7 +92,7 @@ make_key:
 	movq	%rcx, 32(%r13)				# scr_lever	%rcx
 	movq	%r8, 40(%r13)
 
-	# Return the lever ID
+	# Return the key ID
 	movq	%r12, %rax
 
 	popq	%r13

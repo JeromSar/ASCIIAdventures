@@ -19,6 +19,7 @@ objects =\
 	$(BUILD_DIR)/data/data_gamemenu.o \
 	$(BUILD_DIR)/data/data_actionlog.o \
 	$(BUILD_DIR)/data/data_keys.o \
+	$(BUILD_DIR)/data/data_chests.o \
 	$(BUILD_DIR)/data/data_doors.o \
 	$(BUILD_DIR)/render/render_game_screen.o \
 	$(BUILD_DIR)/render/render_game_screen_selector.o \
@@ -30,6 +31,7 @@ objects =\
 	$(BUILD_DIR)/render/render_gamemenu_screen.o \
 	$(BUILD_DIR)/render/render_game_keys.o \
 	$(BUILD_DIR)/render/render_game_doors.o \
+	$(BUILD_DIR)/render/render_game_chests.o \
 	$(BUILD_DIR)/render/render_gameover_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
 	$(BUILD_DIR)/control/control_player.o \
