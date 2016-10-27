@@ -128,6 +128,8 @@ make_chest:
 	popq	%rbp
 	ret
 
+
+
 # expects chest address in r13
 chest_primes:
 	# tier 1
@@ -141,7 +143,7 @@ chest_primes:
 
 	jmp	chest_primes_done
 
-weapon_tier_2:
+primes_tier_2:
 	# tier 2
 	cmpq	$1, 48(%r13)
 	jne	primes_tier_3
@@ -153,7 +155,7 @@ weapon_tier_2:
 
 	jmp	chest_primes_done
 
-weapon_tier_3:
+primes_tier_3:
 	# tier 3
 	addq	$17, player_money
 	movq	$primes_found, %rdi
@@ -163,6 +165,8 @@ weapon_tier_3:
 chest_primes_done:
 	jmp	control_chest_return
 
+	
+
 # When you find health
 chest_health:
 	movq	$Health_found, %rdi
@@ -170,13 +174,15 @@ chest_health:
 	movq	$10, player_health
 	jmp	control_chest_return
 
+
+
 # when you find a weapon
 chest_weapon:
 	# tier 1
 	cmpq	$0, 48(%r13)
 	jne	weapon_tier_2
 
-	movq	$12, player_dammage
+#	movq	$12, player_dammage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_1, %rsi
 	call	log_push
@@ -188,7 +194,7 @@ weapon_tier_2:
 	cmpq	$1, 48(%r13)
 	jne	weapon_tier_3
 
-	movq	$14, player_dammage
+#	movq	$14, player_dammage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_2, %rsi
 	call	log_push
@@ -197,13 +203,15 @@ weapon_tier_2:
 
 weapon_tier_3:
 	# tier 3
-	movq	$16, player_health
+	movq	$16, player
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_3, %rsi
 	call	log_push
 
 chest_weapon_done:
 	jmp	control_chest_return
+
+
 
 # when you find some armour
 chest_armour:
