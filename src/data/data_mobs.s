@@ -17,7 +17,7 @@ debug:			.asciz	"debug"
 #					1.. 	-> Alive with this amount of health
 #	8	48	damage		-
 #	8	56	sleeping	0, 1
-mobs_bytes:		.skip	2048			# 16 mobs (128*8)
+mobs_bytes:		.skip	16392			# 64 mobs (128*64)
 
 .data
 mobs_count:		.quad	1
@@ -44,8 +44,164 @@ mobs_init:
 
 	# Make a wolf at (9, 30, 10)
 	movq	$9, %rdi
-	movq	$55, %rsi
-	movq	$5, %rdx
+	movq	$50, %rsi
+	movq	$10, %rdx
+	call	make_wolf
+
+	# Make a wolf at (0, 54, 3)
+	movq	$0, %rdi
+	movq	$54, %rsi
+	movq	$3, %rdx
+	call	make_wolf
+
+	# Make a wolf at (0, 31, 9)
+	movq	$0, %rdi
+	movq	$31, %rsi
+	movq	$9, %rdx
+	call	make_wolf
+
+	# Make a wolf at (0, 23, 15)
+	movq	$0, %rdi
+	movq	$23, %rsi
+	movq	$15, %rdx
+	call	make_wolf
+
+	# Make a wolf at (1, 36, 8)
+	movq	$1, %rdi
+	movq	$36, %rsi
+	movq	$8, %rdx
+	call	make_wolf
+
+	# Make a wolf at (1, 53, 6)
+	movq	$1, %rdi
+	movq	$53, %rsi
+	movq	$6, %rdx
+	call	make_wolf
+
+	# Make a wolf at (2, 45, 9)
+	movq	$2, %rdi
+	movq	$45, %rsi
+	movq	$10, %rdx
+	call	make_wolf
+
+	# Make a wolf at (2, 45, 11)
+	movq	$2, %rdi
+	movq	$45, %rsi
+	movq	$10, %rdx
+	call	make_wolf
+
+	# Make a wolf at (2, 64, 14)
+	movq	$2, %rdi
+	movq	$64, %rsi
+	movq	$14, %rdx
+	call	make_wolf
+
+	# Make a wolf at (2, 19, 2)
+	movq	$2, %rdi
+	movq	$19, %rsi
+	movq	$2, %rdx
+	call	make_wolf
+
+	# Make a wolf at (5, 31, 11)
+	movq	$5, %rdi
+	movq	$31, %rsi
+	movq	$11, %rdx
+	call	make_wolf
+
+	# Make a wolf at (5, 48, 6)
+	movq	$5, %rdi
+	movq	$48, %rsi
+	movq	$6, %rdx
+	call	make_wolf
+
+	# Make a wolf at (5, 29, 16)
+	movq	$5, %rdi
+	movq	$29, %rsi
+	movq	$16, %rdx
+	call	make_wolf
+
+	# Make a wolf at (6, 51, 2)
+	movq	$6, %rdi
+	movq	$51, %rsi
+	movq	$2, %rdx
+	call	make_wolf
+
+	# Make a wolf at (6, 11, 13)
+	movq	$6, %rdi
+	movq	$11, %rsi
+	movq	$13, %rdx
+	call	make_wolf
+
+	# Make a wolf at (8, 27, 9)
+	movq	$8, %rdi
+	movq	$27, %rsi
+	movq	$9, %rdx
+	call	make_wolf
+
+	# Make a wolf at (10, 48, 2)
+	movq	$10, %rdi
+	movq	$48, %rsi
+	movq	$2, %rdx
+	call	make_wolf
+
+	# Make a wolf at (11, 56, 2)
+	movq	$11, %rdi
+	movq	$56, %rsi
+	movq	$2, %rdx
+	call	make_wolf
+
+	# Make a wolf at (11, 40, 11)
+	movq	$11, %rdi
+	movq	$40, %rsi
+	movq	$11, %rdx
+	call	make_wolf
+
+	# Make a wolf at (12, 18, 12)
+	movq	$12, %rdi
+	movq	$18, %rsi
+	movq	$12, %rdx
+	call	make_wolf
+
+	# Make a wolf at (12, 15, 1)
+	movq	$12, %rdi
+	movq	$15, %rsi
+	movq	$1, %rdx
+	call	make_wolf
+
+	# Make a wolf at (13, 18, 11)
+	movq	$13, %rdi
+	movq	$18, %rsi
+	movq	$11, %rdx
+	call	make_wolf
+
+	# Make a wolf at (14, 37, 14)
+	movq	$14, %rdi
+	movq	$37, %rsi
+	movq	$14, %rdx
+	call	make_wolf
+
+	# Make a wolf at (14, 3, 13)
+	movq	$14, %rdi
+	movq	$3, %rsi
+	movq	$13, %rdx
+	call	make_wolf
+
+	# Make a wolf at (14, 14, 11)
+	movq	$14, %rdi
+	movq	$14, %rsi
+	movq	$11, %rdx
+	call	make_wolf
+
+	# Make a wolf at (15, 57, 10)
+	movq	$15, %rdi
+	movq	$57, %rsi
+	movq	$10, %rdx
+	call	make_wolf
+
+	# Make a wolf at (15, 57, 10)
+	movq	$15, %rdi
+	movq	$15, %rsi
+	movq	$2, %rdx
 	call	make_wolf
 
 	movq	%rbp, %rsp
@@ -170,7 +326,7 @@ make_wolf:
 	movq	%rdi, 16(%r13)				# scr_id	%rdi
 	movq	%rsi, 24(%r13)				# x_pos		%rsi
 	movq	%rdx, 32(%r13)				# y_pos		%rdx
-	movq	$10, 40(%r13)				# health	10
+	movq	$6, 40(%r13)				# health	10
 	movq	$1, 48(%r13)				# damage	1
 	movq	$1, 56(%r13)				# sleeping	1
 

@@ -32,10 +32,42 @@ doors_init:
 	movq	%rsp, %rbp
 
 	# values to be placed
-	movq	$10, %rdi				# scr_id
-	movq	$9, %rsi				# x_door
-	movq	$8, %rdx				# y_door
+	movq	$6, %rdi				# scr_id
+	movq	$34, %rsi				# x_door
+	movq	$6, %rdx				# y_door
+	movq	$2, %rcx				# door_colour
+	movq	$0, %r8					# door_state
+	call	make_door
+
+	# values to be placed
+	movq	$13, %rdi				# scr_id
+	movq	$63, %rsi				# x_door
+	movq	$9, %rdx				# y_door
 	movq	$0, %rcx				# door_colour
+	movq	$0, %r8					# door_state
+	call	make_door
+
+	# values to be placed
+	movq	$10, %rdi				# scr_id
+	movq	$24, %rsi				# x_door
+	movq	$6, %rdx				# y_door
+	movq	$0, %rcx				# door_colour
+	movq	$0, %r8					# door_state
+	call	make_door
+
+	# values to be placed
+	movq	$14, %rdi				# scr_id
+	movq	$64, %rsi				# x_door
+	movq	$14, %rdx				# y_door
+	movq	$1, %rcx				# door_colour
+	movq	$0, %r8					# door_state
+	call	make_door
+
+	# values to be placed
+	movq	$14, %rdi				# scr_id
+	movq	$64, %rsi				# x_door
+	movq	$3, %rdx				# y_door
+	movq	$1, %rcx				# door_colour
 	movq	$0, %r8					# door_state
 	call	make_door
 

@@ -46,21 +46,85 @@ chests_init:
 	movq	%rsp, %rbp
 
 	# values to be placed in the chest
-	movq	$9, %rdi				# scr_id
-	movq	$8, %rsi				# x_chest
-	movq	$8, %rdx				# y_chest
+	movq	$0, %rdi				# scr_id
+	movq	$28, %rsi				# x_chest
+	movq	$12, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_armour, %r8			# chest function
+	movq	$2, %r9					# chest tier
+	call	make_chest
+
+	# values to be placed in the chest
+	movq	$2, %rdi				# scr_id
+	movq	$6, %rsi				# x_chest
+	movq	$3, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_primes, %r8			# chest function
+	movq	$1, %r9					# chest tier
+	call	make_chest
+
+	movq	$11, %rdi				# scr_id
+	movq	$65, %rsi				# x_chest
+	movq	$4, %rdx				# y_chest
 	movq	$0, %rcx				# chest_state
 	movq	$chest_primes, %r8			# chest function
 	movq	$0, %r9					# chest tier
 	call	make_chest
 
-	# values to be placed in the chest
-	movq	$9, %rdi				# scr_id
-	movq	$10, %rsi				# x_chest
-	movq	$8, %rdx				# y_chest
+	movq	$13, %rdi				# scr_id
+	movq	$49, %rsi				# x_chest
+	movq	$13, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_health, %r8			# chest function
+	movq	$0, %r9					# chest tier
+	call	make_chest
+
+	movq	$14, %rdi				# scr_id
+	movq	$73, %rsi				# x_chest
+	movq	$1, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_weapon, %r8			# chest function
+	movq	$1, %r9					# chest tier
+	call	make_chest
+
+	movq	$14, %rdi				# scr_id
+	movq	$73, %rsi				# x_chest
+	movq	$16, %rdx				# y_chest
 	movq	$0, %rcx				# chest_state
 	movq	$chest_armour, %r8			# chest function
 	movq	$1, %r9					# chest tier
+	call	make_chest
+
+	movq	$12, %rdi				# scr_id
+	movq	$14, %rsi				# x_chest
+	movq	$3, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_health, %r8			# chest function
+	movq	$0, %r9					# chest tier
+	call	make_chest
+
+	movq	$12, %rdi				# scr_id
+	movq	$6, %rsi				# x_chest
+	movq	$14, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_weapon, %r8			# chest function
+	movq	$0, %r9					# chest tier
+	call	make_chest
+
+	movq	$5, %rdi				# scr_id
+	movq	$19, %rsi				# x_chest
+	movq	$10, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_health, %r8			# chest function
+	movq	$0, %r9					# chest tier
+	call	make_chest
+
+	movq	$6, %rdi				# scr_id
+	movq	$7, %rsi				# x_chest
+	movq	$9, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_health, %r8			# chest function
+	movq	$0, %r9					# chest tier
 	call	make_chest
 
 	movq	%rbp, %rsp
@@ -171,7 +235,8 @@ chest_primes_done:
 chest_health:
 	movq	$Health_found, %rdi
 	call	log_push
-	movq	$10, player_health
+	movq	player_max_health, %r10
+	movq	%r10, player_health
 	jmp	control_chest_return
 
 
@@ -203,7 +268,7 @@ weapon_tier_2:
 
 weapon_tier_3:
 	# tier 3
-	
+
 	movq	$6, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_3, %rsi
@@ -220,6 +285,9 @@ chest_armour:
 	cmpq	$0, 48(%r13)
 	jne	armour_tier_2
 
+	cmpq	$12, player_max_health
+	jl	chest_armour_done
+	movq	$12, player_max_health
 	movq	$12, player_health
 	movq	$item_found, %rdi
 	movq	$armour_tiers_1, %rsi
@@ -232,6 +300,9 @@ armour_tier_2:
 	cmpq	$1, 48(%r13)
 	jne	armour_tier_3
 
+	cmpq	$14, player_max_health
+	jl	chest_armour_done
+	movq	$14, player_max_health
 	movq	$14, player_health
 	movq	$item_found, %rdi
 	movq	$armour_tiers_2, %rsi
@@ -241,6 +312,9 @@ armour_tier_2:
 
 armour_tier_3:
 	# tier 3
+	cmpq	$16, player_max_health
+	jl	chest_armour_done
+	movq	$16, player_max_health
 	movq	$16, player_health
 	movq	$item_found, %rdi
 	movq	$armour_tiers_3, %rsi
