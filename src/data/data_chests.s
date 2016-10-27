@@ -141,7 +141,7 @@ chest_primes:
 
 	jmp	chest_primes_done
 
-weapon_tier_2:
+primes_tier_2:
 	# tier 2
 	cmpq	$1, 48(%r13)
 	jne	primes_tier_3
@@ -153,7 +153,7 @@ weapon_tier_2:
 
 	jmp	chest_primes_done
 
-weapon_tier_3:
+primes_tier_3:
 	# tier 3
 	addq	$17, player_money
 	movq	$primes_found, %rdi
@@ -176,7 +176,7 @@ chest_weapon:
 	cmpq	$0, 48(%r13)
 	jne	weapon_tier_2
 
-	movq	$12, player_dammage
+	movq	$4, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_1, %rsi
 	call	log_push
@@ -188,7 +188,7 @@ weapon_tier_2:
 	cmpq	$1, 48(%r13)
 	jne	weapon_tier_3
 
-	movq	$14, player_dammage
+	movq	$5, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_2, %rsi
 	call	log_push
@@ -197,7 +197,7 @@ weapon_tier_2:
 
 weapon_tier_3:
 	# tier 3
-	movq	$16, player_health
+	movq	$6, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_3, %rsi
 	call	log_push
