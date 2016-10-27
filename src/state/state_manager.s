@@ -3,6 +3,7 @@ state_mainmenu:		.quad	0
 state_game:		.quad	1
 state_gamemenu:		.quad	2
 state_gameover:		.quad	3
+debug:			.asciz	"Not running control: %lu"
 
 .data
 current_state:		.quad	0
@@ -65,11 +66,13 @@ state_control:
 	pushq	%r14
 	pushq	%r15
 
-#	movq	$stdscr, %rdi
 	call	getch					# Read a character
 	movq	%rax, %r12				# Store it in r12
 
+	cmpq	%r12, key_error
+	jle	state_control_nochar
 
+	# Current states
 	movq	current_state, %r13
 
 	cmpq	%r13, state_mainmenu
@@ -84,6 +87,10 @@ state_control:
 	cmpq	%r13, state_gameover
 	je	gameover_control
 
+	# Unknown state?
+	jmp	state_control_ret
+
+state_control_nochar:
 state_control_ret:
 	popq	%r15
 	popq	%r14

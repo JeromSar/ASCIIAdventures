@@ -13,11 +13,10 @@ render_game_mobs:
 	movq	%rax, %r14
 
 	movq	mobs_count, %r15
-	decq	%r15
-
 render_loop:
 	cmpq	$0, %r15
 	je	mobs_render_done
+	decq	%r15
 
 	# Get the mobs address
 	movq	%r15, %rdi
@@ -26,11 +25,11 @@ render_loop:
 
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%r12)
-	jne	mobs_render_continue
+	jne	render_loop
 
 	# Check that the mob is alive
 	cmpq	$0, 40(%r12)
-	je	mobs_render_continue
+	je	render_loop
 
 	# Check if the mob is sleeping
 	cmpq	$0, 56(%r12)
@@ -56,13 +55,11 @@ print_mob:
 
 	# Stop color if necessary
 	cmpq	$0, 56(%r12)
-	je	mobs_render_continue
+	je	render_loop
 	cmpq	$0, timing_state
-	je	mobs_render_continue
+	je	render_loop
 	call	color_stop_cyan
 
-mobs_render_continue:
-	decq	%r15
 	jmp	render_loop
 
 mobs_render_done:

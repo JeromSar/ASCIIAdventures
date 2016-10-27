@@ -13,11 +13,11 @@ control_mobs:
 
 	# Current mob,store in r15
 	movq	mobs_count, %r15
-	decq	%r15
 
 control_loop:
 	cmpq	$0, %r15
 	je	control_done
+	decq	%r15
 
 	# Get the mobs address, store in r13
 	movq	%r15, %rdi
@@ -27,6 +27,10 @@ control_loop:
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%r13)
 	jne	control_continue
+
+	# Check that the mob is not dead
+	cmpq	$0, 40(%r13)
+	je	control_continue
 
 	# Check that the mob is awake
 	cmpq	$1, 56(%r13)
@@ -84,8 +88,6 @@ control_sleeping:
 	movq	$0, 56(%r13)
 
 control_continue:
-	decq	%r15
-
 	# Update the screen so mobs see each other's position
 	# TODO: fix
 	call	refresh
@@ -131,9 +133,6 @@ attack_player:
 
 	# Do the damage
 	subq	%r8, player_health
-
-	# No health regen for you
-	movq	$0, player_nodmg_turns
 
 	# Get the mob name
 	movq	8(%r13), %rdi

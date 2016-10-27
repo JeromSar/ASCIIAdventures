@@ -46,6 +46,7 @@ main:
 
 
 main_loop:
+	call	timing_update
 
 	call	state_render				# Print the current screen to the buffer
 

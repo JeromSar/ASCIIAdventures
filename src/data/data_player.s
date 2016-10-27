@@ -5,7 +5,6 @@ player_x:		.quad	39
 player_y:		.quad	8
 player_health:		.quad	10			# Max health = 10
 player_damage:		.quad	3
-player_nodmg_turns:	.quad	0
 player_money:		.quad	0
 player_blue_keys:	.quad	0
 player_red_keys:	.quad	0

@@ -2,12 +2,9 @@
 lever_activate:			.asciz	"You activated the lever"
 lever_deactivate:		.asciz	"You deactivated the lever"
 key_deactivate:			.asciz	"You found a key"
-door_deactivate:		.asciz	"You open the door with the key"
+door_deactivate:		.asciz	"You opened the door with the key"
 door_door_no_keys:		.asciz	"You do not have the right key"
 chest_deactivate:		.asciz	"You opened a chest"
-debuq:				.asciz	"runs till here"
-debuq2:				.asciz	"screen id is %ld"
-debug:				.asciz	"Door at (%lu, %lu)"
 
 .data
 this_x:				.quad 0
