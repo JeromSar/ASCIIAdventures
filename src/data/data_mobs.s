@@ -7,14 +7,16 @@ debug:			.asciz	"debug"
 .bss
 #
 # Mob Data Representation (MDR)
-# 	Length	Offset	Name	Values
-#	8	0	id	-
-#	8 	8	type	0 -> Wolf
-#	8	16	scr_id	-
-#	8	24	x_pos	-
-#	8	32	y_pos	-
-#	8	40	health	-
-#	8	48	damage	-
+# 	Length	Offset	Name		Values
+#	8	0	id		-
+#	8 	8	type		0	-> Wolf
+#	8	16	scr_id		-
+#	8	24	x_pos		-
+#	8	32	y_pos		-
+#	8	40	health		0	-> Dead
+#					1.. 	-> Alive with this amount of health
+#	8	48	damage		-
+#	8	56	sleeping	0, 1
 mobs_bytes:		.skip	2048			# 16 mobs (128*8)
 
 .data
@@ -170,6 +172,7 @@ make_wolf:
 	movq	%rdx, 32(%r13)				# y_pos		%rdx
 	movq	$10, 40(%r13)				# health	10
 	movq	$1, 48(%r13)				# damage	1
+	movq	$1, 56(%r13)				# sleeping	1
 
 	# Return the mob ID
 	movq	%r12, %rax

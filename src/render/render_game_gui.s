@@ -146,6 +146,7 @@ render_log_loop:
 	movq	action_log(%r15), %r8
 	addq	$8, %r15
 	movq	action_log(%r15), %r9
+	movq	$0, %rax
 	call	mvprintw
 
 render_log_skip:

@@ -1,6 +1,7 @@
 .text
-bytes_per_node:		.quad	24
-debug:			.asciz	"There is a /%c/ at (%ul, %ul)"
+bytes_per_node:			.quad	24
+debug:				.asciz	"There is a /%c/ at (%ul, %ul)"
+pathfinding_max_range:		.quad	30
 
 .bss
 #
@@ -9,15 +10,16 @@ debug:			.asciz	"There is a /%c/ at (%ul, %ul)"
 #	8	0	X
 #	8	8	y
 #	8	16	distance
-nodes:			.skip	34536		# 1920 (row), 24 (node), 34512 (-node), 32616 (-row)
+nodes:				.skip	34536			# 1920 (row), 24 (node), 34512 (-node), 32616 (-row)
 
 .data
-counter:		.quad	1
-mob_address:		.quad	0
-player_address:		.quad	0
-mob_goto:		.quad	4
-debug_v:		.quad	0
+counter:			.quad	1
+mob_address:			.quad	0
+player_address:			.quad	0
+mob_goto:			.quad	4
+pathfinding_path_length:	.quad	0
 
+.global pathfinding_path_length
 .global pathfinding
 
 node_address:
@@ -75,9 +77,12 @@ reset_loop:
 pathfinding_loop:
 	movq	$nodes, %r15
 
+	movq	counter, %r10
+	movq	%r10, pathfinding_path_length
+
 	# Check if the path is too long
-	cmpq	$50, counter
-	jg	pathfinding_end
+	cmpq	%r10, pathfinding_max_range
+	jle	pathfinding_too_long
 
 loop_inside_loop:
 	movq	counter, %r8
@@ -102,6 +107,9 @@ loop_inside_loop_end:
 	incq	counter
 
 	jmp	pathfinding_loop
+
+pathfinding_too_long:
+	movq	$0, pathfinding_path_length
 
 pathfinding_end:
 	movq	mob_goto, %rax			# return value in rax

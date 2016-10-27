@@ -41,21 +41,24 @@ curses_init:
 	# Enable the function keys (arrows, keypad, etc)
 	movq	$stdscr, %rdi
 	movq	$1, %rsi
-	#call	keypad				# Or not
-
-	# Enable special character
-	movq	$178, %rdi
-	call	addch
+#	call	keypad				# Or not
 
 	# Hide the cursor
 	movq	$0, %rdi
 	call	curs_set
 
+	# Make getch a non blocking call
+	movq	$stdscr, %rdi
+	movq	$1, %rsi
+	call	nodelay
+
+	movq	$0, %rdi
+	call	timeout
+
 	# Check that colors are supported
 	call	has_colors
 	cmpq	$0, %rax
 	jne	curses_init_color
-
 
 	call	endwin
 	movq	$no_color_err, %rdi

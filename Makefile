@@ -5,6 +5,7 @@ objects =\
 	$(BUILD_DIR)/pathfinding.o \
 	$(BUILD_DIR)/save.o \
 	$(BUILD_DIR)/sound.o \
+	$(BUILD_DIR)/timing.o \
 	$(BUILD_DIR)/state/state_manager.o \
 	$(BUILD_DIR)/state/state_game.o \
 	$(BUILD_DIR)/state/state_mainmenu.o \

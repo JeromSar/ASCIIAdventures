@@ -35,6 +35,10 @@ game_control:
 
 	call	control_player
 
+
+	call	timing_update
+
+
 	call	control_action
 
 	call	control_attack

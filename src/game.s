@@ -37,6 +37,7 @@ main:
 	call	curses_init
 	call	sound_init
 	call	sound_load
+	call	timing_init
 	call	mobs_init
 	call	levers_init
 	call	doors_init

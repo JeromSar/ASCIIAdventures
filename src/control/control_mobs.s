@@ -28,6 +28,10 @@ control_loop:
 	cmpq	%r14, 16(%r13)
 	jne	control_continue
 
+	# Check that the mob is awake
+	cmpq	$1, 56(%r13)
+	je	control_sleeping
+
 	# (x,y) in r8, r9
 	movq	24(%r13), %r8
 	movq	32(%r13), %r9
@@ -61,6 +65,23 @@ control_pathfinding:
 	je	go_south
 
 	# No path found...
+	jmp	control_continue
+
+control_sleeping:
+	movq	24(%r13), %rdi
+	movq	32(%r13), %rsi
+	call	pathfinding
+
+	# Path found?
+	cmpq	$4, %rax
+	je	control_continue
+
+	# In the range?
+	cmpq	$12, pathfinding_path_length
+	jg	control_continue
+
+	# Wake the mob
+	movq	$0, 56(%r13)
 
 control_continue:
 	decq	%r15
