@@ -4,7 +4,7 @@ lever_deactivate:		.asciz	"You deactivated the lever"
 key_deactivate:			.asciz	"You found a key"
 door_deactivate:		.asciz	"You open the door with the key"
 door_door_no_keys:		.asciz	"You do not have the right key"
-chest_deactivate:		.asciz	"You opend a chest"
+chest_deactivate:		.asciz	"You opened a chest"
 debuq:				.asciz	"runs till here"
 debuq2:				.asciz	"screen id is %ld"
 debug:				.asciz	"Door at (%lu, %lu)"
@@ -115,6 +115,7 @@ control_e_loop:
 	jne	control_e_continue
 
 	# Toggle the lever
+	call	sound_play_clank
 	movq	8(%r13), %r8
 	cmpq	$0, %r8
 	je	control_e_val_0

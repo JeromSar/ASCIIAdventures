@@ -165,7 +165,7 @@ primes_tier_3:
 chest_primes_done:
 	jmp	control_chest_return
 
-	
+
 
 # When you find health
 chest_health:
@@ -182,7 +182,7 @@ chest_weapon:
 	cmpq	$0, 48(%r13)
 	jne	weapon_tier_2
 
-#	movq	$12, player_dammage
+	movq	$4, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_1, %rsi
 	call	log_push
@@ -194,7 +194,7 @@ weapon_tier_2:
 	cmpq	$1, 48(%r13)
 	jne	weapon_tier_3
 
-#	movq	$14, player_dammage
+	movq	$5, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_2, %rsi
 	call	log_push
@@ -203,7 +203,8 @@ weapon_tier_2:
 
 weapon_tier_3:
 	# tier 3
-	movq	$16, player
+	
+	movq	$6, player_damage
 	movq	$item_found, %rdi
 	movq	$weapon_tiers_3, %rsi
 	call	log_push

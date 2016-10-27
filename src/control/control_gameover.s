@@ -20,7 +20,5 @@ control_done:
 
 # Enter key
 control_enter:
-	movq	state_mainmenu, %r8
-	movq	%r8, current_state
-
+	movq	$1, exit_game
 	jmp	control_done

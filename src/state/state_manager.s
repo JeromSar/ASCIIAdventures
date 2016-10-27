@@ -65,16 +65,9 @@ state_control:
 	pushq	%r14
 	pushq	%r15
 
-	# Resize the terminal
-	#movq	HEIGHT, %rdi
-	#movq	WIDTH, %rsi
-	#call	resizeterm
-
+#	movq	$stdscr, %rdi
 	call	getch					# Read a character
 	movq	%rax, %r12				# Store it in r12
-
-	movq	$0, %rax				# Default return code is 0, each state can modify this value if needed
-							# For example, if 1 is returned, the game exits
 
 
 	movq	current_state, %r13

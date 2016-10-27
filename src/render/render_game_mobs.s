@@ -1,5 +1,6 @@
 .text
 mob_char:		.asciz	"W"
+mob_sleep_char:		.asciz	"z"
 
 .global render_game_mobs
 
@@ -21,35 +22,43 @@ render_loop:
 	# Get the mobs address
 	movq	%r15, %rdi
 	call	mobs_id_to_addr
-
-	# DEBUG - Print some debug information
-	#pushq	%rax
-	#movq	%r14, %rdi
-	#movq	$4, %rsi
-	#incq	%r14
-	#movq	$debug, %rdx
-	#movq	16(%rax), %rcx
-	#movq	24(%rax), %r8
-	#movq	32(%rax), %r9
-	#movq	$0, %rax
-	#call	mvprintw
-	#popq	%rax
-	# DEBUG - end
+	movq	%rax, %r12
 
 	# Check that the mob is on the current screen
-	cmpq	%r14, 16(%rax)
+	cmpq	%r14, 16(%r12)
 	jne	mobs_render_continue
 
-	pushq	%rax
-	call	color_start_cyan
-	popq	%rax
+	# Check that the mob is alive
+	cmpq	$0, 40(%r12)
+	je	mobs_render_continue
 
-	# Get the x y and print
-	movq	32(%rax), %rdi
-	movq	24(%rax), %rsi
+	# Check if the mob is sleeping
+	cmpq	$0, 56(%r12)
+	je	mob_awake
+
+	# Check if the sleeping char should be printed
+	cmpq	$0, timing_state
+	je	mob_awake
+
+	# Mob is not sleeping
+	movq	$mob_sleep_char, %rdx
+	jmp	print_mob
+
+mob_awake:
+	call	color_start_cyan
 	movq	$mob_char, %rdx
+
+print_mob:
+	# Get the x y and print
+	movq	32(%r12), %rdi
+	movq	24(%r12), %rsi
 	call	mvprintw
 
+	# Stop color if necessary
+	cmpq	$0, 56(%r12)
+	je	mobs_render_continue
+	cmpq	$0, timing_state
+	je	mobs_render_continue
 	call	color_stop_cyan
 
 mobs_render_continue:

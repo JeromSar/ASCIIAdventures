@@ -7,7 +7,6 @@ control_mobs:
 	push	%rbp
 	movq	%rsp, %rbp
 
-
 	# Calculate scr id, store in r14
 	call	screen_get_id
 	movq	%rax, %r14
@@ -28,6 +27,10 @@ control_loop:
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%r13)
 	jne	control_continue
+
+	# Check that the mob is awake
+	cmpq	$1, 56(%r13)
+	je	control_sleeping
 
 	# (x,y) in r8, r9
 	movq	24(%r13), %r8
@@ -62,6 +65,23 @@ control_pathfinding:
 	je	go_south
 
 	# No path found...
+	jmp	control_continue
+
+control_sleeping:
+	movq	24(%r13), %rdi
+	movq	32(%r13), %rsi
+	call	pathfinding
+
+	# Path found?
+	cmpq	$4, %rax
+	je	control_continue
+
+	# In the range?
+	cmpq	$12, pathfinding_path_length
+	jg	control_continue
+
+	# Wake the mob
+	movq	$0, 56(%r13)
 
 control_continue:
 	decq	%r15
@@ -102,12 +122,18 @@ equal_y:
 attack_player:
 	movq	48(%r13), %r8
 
-	# Are we dead?
+	cmpq	$1, control_player_attack
+	jne	control_continue
+
+	# Is the player dead
 	cmpq	%r8, player_health
 	jle	player_dead
 
 	# Do the damage
 	subq	%r8, player_health
+
+	# No health regen for you
+	movq	$0, player_nodmg_turns
 
 	# Get the mob name
 	movq	8(%r13), %rdi
