@@ -22,23 +22,13 @@ render_loop:
 	movq	%r15, %rdi
 	call	mobs_id_to_addr
 
-	# DEBUG - Print some debug information
-	#pushq	%rax
-	#movq	%r14, %rdi
-	#movq	$4, %rsi
-	#incq	%r14
-	#movq	$debug, %rdx
-	#movq	16(%rax), %rcx
-	#movq	24(%rax), %r8
-	#movq	32(%rax), %r9
-	#movq	$0, %rax
-	#call	mvprintw
-	#popq	%rax
-	# DEBUG - end
-
 	# Check that the mob is on the current screen
 	cmpq	%r14, 16(%rax)
 	jne	mobs_render_continue
+
+	# Check that the mob is alive
+	cmpq	$0, 40(%rax)
+	je	mobs_render_continue
 
 	pushq	%rax
 	call	color_start_cyan

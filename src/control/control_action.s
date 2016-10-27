@@ -108,6 +108,7 @@ control_e_loop:
 	jne	control_e_continue
 
 	# Toggle the lever
+	call	sound_play_clank
 	movq	8(%r13), %r8
 	cmpq	$0, %r8
 	je	control_e_val_0

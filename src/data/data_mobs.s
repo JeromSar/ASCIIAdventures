@@ -2,6 +2,7 @@
 bytes_per_mob:		.quad	128
 name_wolf:		.asciz	"wolf"
 name_unknown:		.asciz	"monster"
+debug:			.asciz	"debug"
 
 .bss
 #
@@ -27,6 +28,7 @@ mobs_count:		.quad	1
 .global mobs_init
 .global mobs_id_to_addr
 .global mobs_type_to_name
+.global mobs_get_at_coords
 
 mobs_init:
 	pushq	%rbp
@@ -83,6 +85,58 @@ mobs_type_to_name_done:
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret
+
+
+mobs_get_at_coords:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r12
+	pushq	%r13
+	pushq	%r14
+	pushq	%r15
+
+	movq	%rdi, %r14					# x in r14
+	movq	%rsi, %r15					# y in r15
+
+	call	screen_get_id
+	movq	%rax, %r13					# screen id in r13
+
+	movq	mobs_count, %r12				# counter in r12
+	decq	%r12
+
+mobs_get_at_coords_loop:
+	# Get the mobs address
+	movq	%r12, %rdi
+	call	mobs_id_to_addr
+
+	# Check that the mob is on the current screen
+	cmpq	%r13, 16(%rax)
+	jne	mobs_get_at_coords_continue
+
+	# Compare the x and y
+	cmpq	24(%rax), %r14
+	jne	mobs_get_at_coords_continue
+
+	cmpq	32(%rax), %r15
+	jne	mobs_get_at_coords_continue
+
+	jmp	mobs_get_at_coords_done
+
+mobs_get_at_coords_continue:
+	decq	%r12
+	cmpq	$0, %r12
+	je	mobs_get_at_coords_loop
+	movq	$0, %rax
+
+mobs_get_at_coords_done:
+	popq	%r15
+	popq	%r14
+	popq	%r13
+	popq	%r12
+	movq	%rbp, %rsp
+	popq	%rbp
+	ret
+
 
 # Subroutine - make_wolf
 # Creates a new wolf, and returns its ID

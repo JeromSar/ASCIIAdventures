@@ -7,7 +7,6 @@ control_mobs:
 	push	%rbp
 	movq	%rsp, %rbp
 
-
 	# Calculate scr id, store in r14
 	call	screen_get_id
 	movq	%rax, %r14
@@ -102,12 +101,18 @@ equal_y:
 attack_player:
 	movq	48(%r13), %r8
 
-	# Are we dead?
+	cmpq	$1, control_player_attack
+	jne	control_continue
+
+	# Is the player dead
 	cmpq	%r8, player_health
 	jle	player_dead
 
 	# Do the damage
 	subq	%r8, player_health
+
+	# No health regen for you
+	movq	$0, player_nodmg_turns
 
 	# Get the mob name
 	movq	8(%r13), %rdi

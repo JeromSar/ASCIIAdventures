@@ -35,12 +35,16 @@ main:
 	movq	%rsp, %rbp
 
 	call	curses_init
+	call	sound_init
+	call	sound_load
 	call	mobs_init
 	call	levers_init
 	call	doors_init
 	call	keys_init
 
+
 main_loop:
+
 	call	state_render				# Print the current screen to the buffer
 
 	call	refresh					# Call Libcurses's refresh to update the screen
@@ -52,6 +56,7 @@ main_loop:
 
 main_end:
 
+	call	sound_deinit
 	call	curses_deinit
 
 	movq	$0, %rdi

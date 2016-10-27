@@ -4,6 +4,7 @@ objects =\
 	$(BUILD_DIR)/keyboard.o \
 	$(BUILD_DIR)/pathfinding.o \
 	$(BUILD_DIR)/save.o \
+	$(BUILD_DIR)/sound.o \
 	$(BUILD_DIR)/state/state_manager.o \
 	$(BUILD_DIR)/state/state_game.o \
 	$(BUILD_DIR)/state/state_mainmenu.o \
@@ -31,6 +32,7 @@ objects =\
 	$(BUILD_DIR)/render/render_gameover_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
 	$(BUILD_DIR)/control/control_player.o \
+	$(BUILD_DIR)/control/control_attack.o \
 	$(BUILD_DIR)/control/control_mobs.o \
 	$(BUILD_DIR)/control/control_mainmenu.o \
 	$(BUILD_DIR)/control/control_gamemenu.o \
@@ -65,7 +67,7 @@ run: clean game
 	./game
 
 game: $(objects)
-	$(CC) -gstabs -o "$@" $^ -lncurses
+	$(CC) -gstabs -o "$@" $^ -I. -lncurses -lbass
 
 build:
 	mkdir -p $(BUILD_DIR)

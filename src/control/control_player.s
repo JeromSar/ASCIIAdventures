@@ -74,7 +74,6 @@ control_d_done:
 	jmp	control_post
 
 control_post:
-
 	# Player collision check
 	# If the new position is not a space, don't continue
 
