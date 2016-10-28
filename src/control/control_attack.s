@@ -94,6 +94,8 @@ mob_dead:
 	movq	%r9, %rdx
 	call	log_push
 
+	incq	player_kills
+
 control_done:
 	movq	%rbp, %rsp
 	popq	%rbp

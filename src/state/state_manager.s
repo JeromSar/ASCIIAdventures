@@ -3,6 +3,7 @@ state_mainmenu:		.quad	0
 state_game:		.quad	1
 state_gamemenu:		.quad	2
 state_gameover:		.quad	3
+state_win:		.quad	4
 debug:			.asciz	"Not running control: %lu"
 
 .data
@@ -12,6 +13,7 @@ current_state:		.quad	0
 .global state_game
 .global state_gamemenu
 .global state_gameover
+.global state_win
 .global current_state
 
 .global state_render
@@ -44,6 +46,9 @@ state_render:
 
 	cmpq	%r13, state_gameover
 	je	gameover_print
+
+	cmpq	%r13, state_win
+	je	win_print
 
 state_render_ret:
 	popq	%r15
@@ -86,6 +91,9 @@ state_control:
 
 	cmpq	%r13, state_gameover
 	je	gameover_control
+
+	cmpq	%r13, state_win
+	je	win_control
 
 	# Unknown state?
 	jmp	state_control_ret

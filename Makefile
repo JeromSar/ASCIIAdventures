@@ -7,6 +7,7 @@ objects =\
 	$(BUILD_DIR)/sound.o \
 	$(BUILD_DIR)/timing.o \
 	$(BUILD_DIR)/state/state_manager.o \
+	$(BUILD_DIR)/state/state_win.o \
 	$(BUILD_DIR)/state/state_game.o \
 	$(BUILD_DIR)/state/state_mainmenu.o \
 	$(BUILD_DIR)/state/state_gamemenu.o \
@@ -22,6 +23,7 @@ objects =\
 	$(BUILD_DIR)/data/data_chests.o \
 	$(BUILD_DIR)/data/data_doors.o \
 	$(BUILD_DIR)/render/render_game_screen.o \
+	$(BUILD_DIR)/render/render_win_screen.o \
 	$(BUILD_DIR)/render/render_game_screen_selector.o \
 	$(BUILD_DIR)/render/render_game_gui.o \
 	$(BUILD_DIR)/render/render_game_gui_log.o \
@@ -35,6 +37,7 @@ objects =\
 	$(BUILD_DIR)/render/render_game_chests.o \
 	$(BUILD_DIR)/render/render_gameover_screen.o \
 	$(BUILD_DIR)/control/control_action.o \
+	$(BUILD_DIR)/control/control_win.o \
 	$(BUILD_DIR)/control/control_player.o \
 	$(BUILD_DIR)/control/control_attack.o \
 	$(BUILD_DIR)/control/control_mobs.o \
@@ -46,6 +49,7 @@ objects =\
 	$(BUILD_DIR)/screen/screen_gameover.o \
 	$(BUILD_DIR)/screen/screen_gui.o \
 	$(BUILD_DIR)/screen/screen_lvl_1.o \
+	$(BUILD_DIR)/screen/screen_game_win.o \
 
 
 SRC_DIR = src
