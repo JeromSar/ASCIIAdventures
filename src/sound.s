@@ -1,6 +1,5 @@
 .text
 sound_clank_file:	.asciz	"clank.ogg"
-debug:			.asciz	"BASS audio says: Channel: %lu, Play: %lu"
 channel_flags:		.quad	0x20000				# Override the longest playing channel
 
 .data
@@ -81,11 +80,6 @@ sound_play:
 	call	BASS_ChannelPlay
 
 	call	BASS_ErrorGetCode
-
-	movq	$debug, %rdi
-	movq	%r14, %rdx
-	movq	%rax, %rcx
-#	call	log_push
 
 	popq	%r15
 	popq	%r14

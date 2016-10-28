@@ -2,7 +2,6 @@
 bytes_per_mob:		.quad	128
 name_wolf:		.asciz	"wolf"
 name_unknown:		.asciz	"monster"
-debug:			.asciz	"debug"
 
 .bss
 #
@@ -20,7 +19,7 @@ debug:			.asciz	"debug"
 mobs_bytes:		.skip	16392			# 64 mobs (128*64)
 
 .data
-mobs_count:		.quad	1
+mobs_count:		.quad	0
 
 
 .global mobs_bytes
@@ -38,8 +37,8 @@ mobs_init:
 
 	# Make a wolf at (9, 10, 10)
 	movq	$9, %rdi
-	movq	$10, %rsi
-	movq	$10, %rdx
+	movq	$58, %rsi
+	movq	$7, %rdx
 	call	make_wolf
 
 	# Make a wolf at (9, 30, 10)
@@ -259,34 +258,38 @@ mobs_get_at_coords:
 	call	screen_get_id
 	movq	%rax, %r13					# screen id in r13
 
+	pushq	$0						# Result value on stack
 	movq	mobs_count, %r12				# counter in r12
-	decq	%r12
 
 mobs_get_at_coords_loop:
+	cmpq	$0, %r12
+	je	mobs_get_at_coords_done
+	decq	%r12
+
 	# Get the mobs address
 	movq	%r12, %rdi
 	call	mobs_id_to_addr
 
 	# Check that the mob is on the current screen
 	cmpq	%r13, 16(%rax)
-	jne	mobs_get_at_coords_continue
+	jne	mobs_get_at_coords_loop
 
-	# Compare the x and y
+	# Check that the x and y match
 	cmpq	24(%rax), %r14
-	jne	mobs_get_at_coords_continue
-
+	jne	mobs_get_at_coords_loop
 	cmpq	32(%rax), %r15
-	jne	mobs_get_at_coords_continue
+	jne	mobs_get_at_coords_loop
 
-	jmp	mobs_get_at_coords_done
-
-mobs_get_at_coords_continue:
-	decq	%r12
-	cmpq	$0, %r12
+	# Check that the mob is not dead
+	cmpq	$0, 40(%rax)
 	je	mobs_get_at_coords_loop
-	movq	$0, %rax
+
+	popq	%r8
+	pushq	%rax
 
 mobs_get_at_coords_done:
+	popq	%rax
+
 	popq	%r15
 	popq	%r14
 	popq	%r13

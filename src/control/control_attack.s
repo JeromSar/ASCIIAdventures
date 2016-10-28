@@ -13,8 +13,6 @@ control_attack:
 	push	%rbp
 	movq	%rsp, %rbp
 
-	movq	$0, control_player_attack
-
 	# The char is stored in r12
 	cmpq	%r12, key_q
 	je	control_q
@@ -22,6 +20,7 @@ control_attack:
 	jmp	control_done					# Unknown key
 
 control_q:
+
 	# Find a mob to attack
 	movq	player_x, %r12
 	movq	player_y, %r13

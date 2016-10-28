@@ -8,6 +8,7 @@ key_space:	.quad	' '
 key_e:		.quad	'e'
 key_p:		.quad	'p'
 key_q:		.quad	'q'
+key_error:	.quad	6369585
 
 .global key_w
 .global key_s
@@ -18,3 +19,4 @@ key_q:		.quad	'q'
 .global key_e
 .global key_p
 .global key_q
+.global key_error

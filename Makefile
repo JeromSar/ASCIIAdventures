@@ -24,6 +24,7 @@ objects =\
 	$(BUILD_DIR)/render/render_game_screen.o \
 	$(BUILD_DIR)/render/render_game_screen_selector.o \
 	$(BUILD_DIR)/render/render_game_gui.o \
+	$(BUILD_DIR)/render/render_game_gui_log.o \
 	$(BUILD_DIR)/render/render_game_player.o \
 	$(BUILD_DIR)/render/render_game_mobs.o \
 	$(BUILD_DIR)/render/render_game_levers.o \

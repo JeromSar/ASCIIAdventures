@@ -57,11 +57,6 @@ timing_update_zero:
 	movq	$1, timing_state
 
 timing_update_done:
-	movq	$debug, %rdi
-	movq	-16(%rbp), %rsi
-	movq	timing_state, %rdx
-#	call	log_push
-
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret
