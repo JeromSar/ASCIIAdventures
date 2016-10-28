@@ -32,9 +32,41 @@ keys_init:
 	movq	%rsp, %rbp
 
 	# values to be placed
-	movq	$9, %rdi				# scr_id
-	movq	$9, %rsi				# x_key
-	movq	$9, %rdx				# y_key
+	movq	$0, %rdi				# scr_id
+	movq	$12, %rsi				# x_key
+	movq	$13, %rdx				# y_key
+	movq	$1, %rcx				# key_colour
+	movq	$0, %r8					# key_state
+	call	make_key
+
+	# values to be placed
+	movq	$6, %rdi				# scr_id
+	movq	$74, %rsi				# x_key
+	movq	$5, %rdx				# y_key
+	movq	$0, %rcx				# key_colour
+	movq	$0, %r8					# key_state
+	call	make_key
+
+	# values to be placed
+	movq	$14, %rdi				# scr_id
+	movq	$14, %rsi				# x_key
+	movq	$2, %rdx				# y_key
+	movq	$1, %rcx				# key_colour
+	movq	$0, %r8					# key_state
+	call	make_key
+
+	# values to be placed
+	movq	$14, %rdi				# scr_id
+	movq	$3, %rsi				# x_key
+	movq	$15, %rdx				# y_key
+	movq	$2, %rcx				# key_colour
+	movq	$0, %r8					# key_state
+	call	make_key
+
+	# values to be placed
+	movq	$15, %rdi				# scr_id
+	movq	$44, %rsi				# x_key
+	movq	$7, %rdx				# y_key
 	movq	$0, %rcx				# key_colour
 	movq	$0, %r8					# key_state
 	call	make_key
