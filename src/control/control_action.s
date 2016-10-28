@@ -245,6 +245,9 @@ control_door_loop:
 #	cmpq	$9, %r14
 	jne	control_door_continue
 
+	movq	$debuq, %rdi
+	call	log_push
+
 	# Compare the x and y of the door
 	movq	this_y,	%r9				# moving y to r9 (y)
 	movq	this_x,	%r8				# moving x to r8 (x)
