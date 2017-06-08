@@ -6,7 +6,8 @@
 
 gameover_print:
 
-	# Render the screen
+	# Render the scree
+	movq	timing_state, %rdi
 	call	render_gameover_screen
 
 	jmp	state_render_ret

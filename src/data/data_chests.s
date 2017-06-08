@@ -127,6 +127,15 @@ chests_init:
 	movq	$0, %r9					# chest tier
 	call	make_chest
 
+	# You are winner screen!
+	movq	$3, %rdi				# scr_id
+	movq	$10, %rsi				# x_chest
+	movq	$3, %rdx				# y_chest
+	movq	$0, %rcx				# chest_state
+	movq	$chest_win, %r8				# chest function
+	movq	$0, %r9					# chest tier
+	call	make_chest
+
 	movq	%rbp, %rsp
 	popq	%rbp
 	ret
@@ -321,4 +330,9 @@ armour_tier_3:
 	call	log_push
 
 chest_armour_done:
+	jmp	control_chest_return
+
+chest_win:
+	movq	state_win, %r8
+	movq	%r8, current_state
 	jmp	control_chest_return

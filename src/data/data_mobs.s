@@ -37,7 +37,7 @@ mobs_init:
 
 	# Make a wolf at (9, 10, 10)
 	movq	$9, %rdi
-	movq	$58, %rsi
+	movq	$25, %rsi
 	movq	$7, %rdx
 	call	make_wolf
 
@@ -329,7 +329,7 @@ make_wolf:
 	movq	%rdi, 16(%r13)				# scr_id	%rdi
 	movq	%rsi, 24(%r13)				# x_pos		%rsi
 	movq	%rdx, 32(%r13)				# y_pos		%rdx
-	movq	$6, 40(%r13)				# health	10
+	movq	$7, 40(%r13)				# health	10
 	movq	$1, 48(%r13)				# damage	1
 	movq	$1, 56(%r13)				# sleeping	1
 

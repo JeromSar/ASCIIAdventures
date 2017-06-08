@@ -5,6 +5,7 @@ key_deactivate:			.asciz	"You found a key"
 door_deactivate:		.asciz	"You opened the door with the key"
 door_door_no_keys:		.asciz	"You do not have the right key"
 chest_deactivate:		.asciz	"You opened a chest"
+debuq:				.asciz	"%ld runs"
 
 .data
 this_x:				.quad 0
@@ -112,7 +113,8 @@ control_e_loop:
 	jne	control_e_continue
 
 	# Toggle the lever
-	call	sound_play_clank
+	movq	sound_clank, %rdi
+	call	sound_play
 	movq	8(%r13), %r8
 	cmpq	$0, %r8
 	je	control_e_val_0
@@ -226,9 +228,9 @@ control_doors:
 	pushq	%r14
 	pushq	%r15
 	movq	doors_count, %r15			# r15 - current door processing
-	decq	%r15
 
 control_door_loop:
+	decq	%r15
 	cmpq	$0, %r15
 	je	control_door_done
 
@@ -278,7 +280,7 @@ red_door:
 	cmpq	$1, 32(%r13)
 	jne	green_door
 
-	cmpq	$1, player_red_keys
+	cmpq	$0, player_red_keys
 	je	key_colour_not_found
 
 	# Value is zero
@@ -307,8 +309,7 @@ key_colour_not_found:
 	call	log_push
 
 control_door_continue:
-	decq	%r15
-	jmp	control_key_loop
+	jmp	control_door_loop
 
 control_door_done:
 	popq	%r15

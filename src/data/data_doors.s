@@ -65,7 +65,6 @@ doors_init:
 
 	# values to be placed
 	movq	$14, %rdi				# scr_id
-	movq	$64, %rsi				# x_door
 	movq	$3, %rdx				# y_door
 	movq	$1, %rcx				# door_colour
 	movq	$0, %r8					# door_state
